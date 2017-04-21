@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     this->refresh_table_purchase_goods();
     this->refresh_table_sell_goods();
     this->refresh_table_move_goods();
+
+    //append username to label_you_entered_as
+    ui->label_you_entered_as->setText(ui->label_you_entered_as->text()+this->login);
 }
 
 MainWindow::~MainWindow() {
@@ -182,4 +185,24 @@ void MainWindow::refresh_table_sell_goods() {
 void MainWindow::refresh_table_move_goods() {
     QString query = "SELECT * FROM move_goods;";
     this->fill_table_with_query(ui->table_move_goods, query);
+}
+
+void MainWindow::on_button_refresh_goods_list_clicked() {
+    this->refresh_table_goods_list();
+    this->configure_tables();
+}
+
+void MainWindow::on_button_refresh_purchase_goods_clicked() {
+    this->refresh_table_purchase_goods();
+    this->configure_tables();
+}
+
+void MainWindow::on_button_refresh_sell_goods_clicked() {
+    this->refresh_table_sell_goods();
+    this->configure_tables();
+}
+
+void MainWindow::on_button_refresh_move_goods_clicked() {
+    this->refresh_table_move_goods();
+    this->configure_tables();
 }
