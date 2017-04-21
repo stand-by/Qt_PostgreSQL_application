@@ -1,24 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>613</width>
+    <height>463</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <widget class="QWidget" name="central_widget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_you_entered_as">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Ви увійшли як: </string>
+      </property>
+      <property name="margin">
+       <number>4</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tab_widget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="tab_goods_list">
+       <attribute name="title">
+        <string>Список товарів</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="table_goods_list">
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustIgnored</enum>
+          </property>
+          <column>
+           <property name="text">
+            <string>Номер товару</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Назва товару</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип товару</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="grid_goods_list">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="button_refresh_goods_list">
+            <property name="text">
+             <string>Оновити</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="button_add_goods_list">
+            <property name="text">
+             <string>Додати товар</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="spacer_goods_list">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_purchase_goods">
+       <attribute name="title">
+        <string>Закупка</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="table_purchase_goods">
+          <column>
+           <property name="text">
+            <string>Номер договору</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Контрагент</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Назва товару</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Кiлькiсть</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Цiна за од.</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="grid_purchase_goods">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="button_contractor_purchase_goods">
+            <property name="text">
+             <string>Додати контрагента</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="button_refresh_purchase_goods">
+            <property name="text">
+             <string>Оновити</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="button_add_purchase_goods">
+            <property name="text">
+             <string>Додати замовлення</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <spacer name="spacer_purchase_goods">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_sell_goods">
+       <attribute name="title">
+        <string>Продаж</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="grid_sell_goods">
+          <item row="0" column="2">
+           <widget class="QPushButton" name="button_refresh_sell_goods">
+            <property name="text">
+             <string>Оновити</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="button_add_sell_goods">
+            <property name="text">
+             <string>Додати замовлення</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="button_contractor_sell_goods">
+            <property name="text">
+             <string>Додати контрагента</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <spacer name="spacer_sell_goods">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="table_sell_goods">
+          <column>
+           <property name="text">
+            <string>Номер договору</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Контрагент</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Назва товару</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Кiлькiсть</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Цiна за од.</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_move_goods">
+       <attribute name="title">
+        <string>Переміщення</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="grid_move_goods">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="button_add_move_goods">
+            <property name="text">
+             <string>Перемiстити</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="button_refresh_move_goods">
+            <property name="text">
+             <string>Оновити</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="spacer_move_goods">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="table_move_goods">
+          <column>
+           <property name="text">
+            <string>Номер договору</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Назва товару</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Кiлькiсть</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>
