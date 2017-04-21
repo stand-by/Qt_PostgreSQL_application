@@ -34,6 +34,11 @@ private:
     void configure_tables();
     void center_and_resize_window(int w, int h);
 
+    void refresh_table_goods_list();
+    void refresh_table_purchase_goods();
+    void refresh_table_sell_goods();
+    void refresh_table_move_goods();
+
     void prompt_error(QString text, bool exit_flag = false);
     void fill_table_with_query(QTableWidget *tab, QString query);
 

@@ -5,6 +5,7 @@ LoginWindow::LoginWindow(QWidget *parent): QDialog(parent), ui(new Ui::LoginWind
     ui->setupUi(this);
 
     this->setModal(true);
+    this->setWindowTitle("Магазин Автозапчастин");
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
     ui->lineEdit_password->setEchoMode(QLineEdit::Password);

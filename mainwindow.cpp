@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     this->create_db_connection();
 
     //window config
-    this->center_and_resize_window(900,600);
+    this->center_and_resize_window(1000,600);
     this->setWindowTitle("Магазин Автозапчастин");
 
     //ui config
@@ -19,7 +19,10 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     this->configure_tables();
 
     //initial tables filling
-    this->fill_table_with_query(ui->table_goods_list, "SELECT * FROM goods_list;");
+    this->refresh_table_goods_list();
+    this->refresh_table_purchase_goods();
+    this->refresh_table_sell_goods();
+    this->refresh_table_move_goods();
 }
 
 MainWindow::~MainWindow() {
@@ -159,4 +162,24 @@ void MainWindow::configure_tables() {
     ui->table_sell_goods->setStyleSheet("background-color: white");
     ui->table_move_goods->setStyleSheet("background-color: white");
     */
+}
+
+void MainWindow::refresh_table_goods_list() {
+    QString query = "SELECT * FROM goods_list;";
+    this->fill_table_with_query(ui->table_goods_list, query);
+}
+
+void MainWindow::refresh_table_purchase_goods() {
+    QString query = "SELECT * FROM purchase_goods;";
+    this->fill_table_with_query(ui->table_purchase_goods, query);
+}
+
+void MainWindow::refresh_table_sell_goods() {
+    QString query = "SELECT * FROM sell_goods;";
+    this->fill_table_with_query(ui->table_sell_goods, query);
+}
+
+void MainWindow::refresh_table_move_goods() {
+    QString query = "SELECT * FROM move_goods;";
+    this->fill_table_with_query(ui->table_move_goods, query);
 }
