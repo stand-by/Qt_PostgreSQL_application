@@ -47,6 +47,7 @@ private:
 
     void prompt_error(QString text, bool exit_flag = false);
     void fill_table_with_query(QTableWidget *tab, QString query);
+    void change_observer_mode(bool state);
 
     void get_user_credentials();
     void create_db_connection();

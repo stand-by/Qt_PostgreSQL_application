@@ -26,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     //append username to label_you_entered_as
     ui->label_you_entered_as->setText(ui->label_you_entered_as->text()+this->login);
+
+    //disable insert actions when logged in as inspector
+    if(login == "inspector") this->change_observer_mode(false);
 }
 
 MainWindow::~MainWindow() {
@@ -59,6 +62,15 @@ void MainWindow::fill_table_with_query(QTableWidget *tab, QString query){
 
         tab->resizeColumnsToContents();
     }
+}
+
+void MainWindow::change_observer_mode(bool state) {
+    ui->button_add_goods_list->setEnabled(state);
+    ui->button_add_purchase_goods->setEnabled(state);
+    ui->button_contractor_purchase_goods->setEnabled(state);
+    ui->button_add_sell_goods->setEnabled(state);
+    ui->button_contractor_sell_goods->setEnabled(state);
+    ui->button_add_move_goods->setEnabled(state);
 }
 
 void MainWindow::get_user_credentials() {
