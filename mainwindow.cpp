@@ -31,13 +31,13 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     //temporary stuff
     if(db.open()){
-        fill_table_rows(ui->table_goods_list, "SELECT * FROM goods_list;");
+        this->fill_table_with_query(ui->table_goods_list, "SELECT * FROM goods_list;");
     } else {
         //handle error with window
         qDebug() << db.lastError();
 
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",db.lastError().text());
+        messageBox.critical(0,"Database Error",db.lastError().text());
         messageBox.setFixedSize(500,200);
         exit(0);
     }
@@ -47,27 +47,35 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-//UNDER CONSTRUCTION
-int MainWindow::fill_table_rows(QTableWidget *tab, QString query){
-    //handle error with window
-    QSqlQuery sq = db.exec(query);
-    qDebug() << sq.lastError();
-    int nc = tab->columnCount();
-    tab->setRowCount(sq.size());
-    sq.first();
-    int row = 0;
-    do{
+void MainWindow::fill_table_with_query(QTableWidget *tab, QString query){
+    QSqlQuery sql_query = db.exec(query);
 
-        for (int i = 0; i < nc; i++){
-            QTableWidgetItem* item = new QTableWidgetItem();
-            item->setText(sq.value(i).toString());
-            tab->setItem(row, i, item);
-        }
-        row++;
+    //prompt error message, when sql query failed
+    if(sql_query.lastError().isValid()) {
+        qDebug() << sql_query.lastError();
+        QMessageBox messageBox;
+        messageBox.critical(0,"Database Error",db.lastError().text());
+        messageBox.setFixedSize(500,200);
     }
-    while (sq.next());
-    tab->resizeColumnsToContents();
-    return 0;
+
+    //otherwise fill table
+    else {
+        int n = tab->columnCount();
+        tab->setRowCount(sql_query.size());
+        sql_query.first();
+
+        int row = 0;
+        do {
+            for (int i = 0; i < n; i++){
+                QTableWidgetItem* item = new QTableWidgetItem();
+                item->setText(sql_query.value(i).toString());
+                tab->setItem(row, i, item);
+            }
+            row++;
+        } while (sql_query.next());
+
+        tab->resizeColumnsToContents();
+    }
 }
 
 void MainWindow::center_and_resize_window(int w, int h) {

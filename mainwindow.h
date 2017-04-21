@@ -33,7 +33,7 @@ private:
     void configure_tables();
     void center_and_resize_window(int w, int h);
 
-    int fill_table_rows(QTableWidget *tab, QString query);
+    void fill_table_with_query(QTableWidget *tab, QString query);
 };
 
 #endif // MAINWINDOW_H
