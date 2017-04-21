@@ -5,6 +5,10 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     //qt basic config
     ui->setupUi(this);
 
+    //db connection config
+    this->get_user_credentials();
+    this->create_db_connection();
+
     //window config
     this->center_and_resize_window(900,600);
     this->setWindowTitle("Магазин Автозапчастин");
@@ -14,33 +18,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     this->configure_tabs();
     this->configure_tables();
 
-    //db config
-    ip = "localhost";
-    port = "5432";
-
-    //create login window
-    login = "vendor";
-    password = "qwerty";
-    db = QSqlDatabase::addDatabase("QPSQL");
-
-    db.setHostName(ip);
-    db.setPort(port.toInt());
-    db.setDatabaseName("automotive_shop");
-    db.setUserName(login);
-    db.setPassword(password);
-
-    //temporary stuff
-    if(db.open()){
-        this->fill_table_with_query(ui->table_goods_list, "SELECT * FROM goods_list;");
-    } else {
-        //handle error with window
-        qDebug() << db.lastError();
-
-        QMessageBox messageBox;
-        messageBox.critical(0,"Database Error",db.lastError().text());
-        messageBox.setFixedSize(500,200);
-        exit(0);
-    }
+    //initial tables filling
+    this->fill_table_with_query(ui->table_goods_list, "SELECT * FROM goods_list;");
 }
 
 MainWindow::~MainWindow() {
@@ -53,9 +32,7 @@ void MainWindow::fill_table_with_query(QTableWidget *tab, QString query){
     //prompt error message, when sql query failed
     if(sql_query.lastError().isValid()) {
         qDebug() << sql_query.lastError();
-        QMessageBox messageBox;
-        messageBox.critical(0,"Database Error",db.lastError().text());
-        messageBox.setFixedSize(500,200);
+        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
     }
 
     //otherwise fill table
@@ -75,6 +52,52 @@ void MainWindow::fill_table_with_query(QTableWidget *tab, QString query){
         } while (sql_query.next());
 
         tab->resizeColumnsToContents();
+    }
+}
+
+void MainWindow::get_user_credentials() {
+    LoginWindow login_form(this);
+    login_form.show();
+
+    if(login_form.exec() == QDialog::Accepted) {
+        qDebug() << "Login Accepted";
+        this->login = login_form.get_login();
+        this->password = login_form.get_password();
+    }
+
+    else {
+        qDebug() << "Login Rejected";
+        QApplication::quit();
+    }
+}
+
+void MainWindow::create_db_connection() {
+    ip = "localhost";
+    port = "5432";
+
+    db = QSqlDatabase::addDatabase("QPSQL");
+    db.setHostName(ip);
+    db.setPort(port.toInt());
+    db.setDatabaseName("automotive_shop");
+    db.setUserName(login);
+    db.setPassword(password);
+
+    if(db.open()){
+        qDebug() << "connected to db";
+    } else {
+        qDebug() << "can not connected to db";
+        qDebug() << db.lastError();
+        prompt_error("Виникла помилка при пiдключеннi до бази данних!\nПеревiрте Ваш логiн/пароль, або статус бази данних.",true);
+    }
+}
+
+void MainWindow::prompt_error(QString text, bool exit_flag) {
+    QMessageBox messageBox;
+    messageBox.critical(0,"Помилка",text);
+    messageBox.setFixedSize(500,200);
+    if(exit_flag) {
+        QApplication::closeAllWindows();
+        exit(0);
     }
 }
 
