@@ -142,12 +142,6 @@ void MainWindow::configure_tabs() {
 }
 
 void MainWindow::configure_tables() {
-    //remove indexing column
-    ui->table_goods_list->verticalHeader()->setVisible(false);
-    ui->table_purchase_goods->verticalHeader()->setVisible(false);
-    ui->table_sell_goods->verticalHeader()->setVisible(false);
-    ui->table_move_goods->verticalHeader()->setVisible(false);
-
     //ban cell editing
     ui->table_goods_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->table_purchase_goods->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -169,6 +163,14 @@ void MainWindow::configure_tables() {
         ui->table_sell_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
     for (int i = 0; i < ui->table_move_goods->horizontalHeader()->count(); ++i)
         ui->table_move_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+
+    /*
+    //remove indexing column
+    ui->table_goods_list->verticalHeader()->setVisible(false);
+    ui->table_purchase_goods->verticalHeader()->setVisible(false);
+    ui->table_sell_goods->verticalHeader()->setVisible(false);
+    ui->table_move_goods->verticalHeader()->setVisible(false);
+    */
 
     /*
     //unnecessary part

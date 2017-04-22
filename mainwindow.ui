@@ -39,7 +39,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -74,7 +74,7 @@
           </property>
           <column>
            <property name="text">
-            <string>Номер товару</string>
+            <string>Код товару</string>
            </property>
           </column>
           <column>
@@ -149,11 +149,6 @@
           <column>
            <property name="text">
             <string>Дата</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Тип</string>
            </property>
           </column>
           <column>
@@ -287,11 +282,6 @@
           </column>
           <column>
            <property name="text">
-            <string>Тип</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
             <string>Контрагент</string>
            </property>
           </column>
@@ -366,7 +356,7 @@
          <widget class="QTableWidget" name="table_move_goods">
           <column>
            <property name="text">
-            <string>Номер договору</string>
+            <string>Номер документа</string>
            </property>
           </column>
           <column>
