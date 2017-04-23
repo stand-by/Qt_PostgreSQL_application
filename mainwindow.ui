@@ -39,7 +39,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -153,7 +153,12 @@
           </column>
           <column>
            <property name="text">
-            <string>Контрагент</string>
+            <string>Постачальник</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Отримувач</string>
            </property>
           </column>
           <column>
@@ -282,7 +287,12 @@
           </column>
           <column>
            <property name="text">
-            <string>Контрагент</string>
+            <string>Постачальник</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Отримувач</string>
            </property>
           </column>
           <column>
