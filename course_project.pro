@@ -18,10 +18,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    loginwindow.cpp
+    loginwindow.cpp \
+    addproduct.cpp
 
 HEADERS  += mainwindow.h \
-    loginwindow.h
+    loginwindow.h \
+    addproduct.h
 
 FORMS    += mainwindow.ui \
-    loginwindow.ui
+    loginwindow.ui \
+    addproduct.ui
