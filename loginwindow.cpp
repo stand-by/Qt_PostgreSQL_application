@@ -9,7 +9,7 @@ LoginWindow::LoginWindow(QWidget *parent): QDialog(parent), ui(new Ui::LoginWind
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
     ui->lineEdit_password->setEchoMode(QLineEdit::Password);
-    ui->lineEdit_username->setText("manager");
+    ui->lineEdit_username->setText("eugene");
     ui->lineEdit_password->setText("qwerty");
 }
 

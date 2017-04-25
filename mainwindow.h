@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QTableWidget>
 #include "loginwindow.h"
+#include "addproduct.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,7 @@ private slots:
     void on_button_refresh_purchase_goods_clicked();
     void on_button_refresh_sell_goods_clicked();
     void on_button_refresh_move_goods_clicked();
+    void on_button_add_goods_list_clicked();
 
 private:
     Ui::MainWindow *ui;

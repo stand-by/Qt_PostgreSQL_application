@@ -220,3 +220,12 @@ void MainWindow::on_button_refresh_move_goods_clicked() {
     this->refresh_table_move_goods();
     this->configure_tables();
 }
+
+void MainWindow::on_button_add_goods_list_clicked() {
+    addproduct* form = new addproduct(this, db);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
+    delete form;
+
+    this->refresh_table_goods_list();
+    this->configure_tables();
+}
