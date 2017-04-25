@@ -1,26 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>addproduct</class>
  <widget class="QDialog" name="addproduct">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>307</width>
+    <height>281</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <widget class="QDialogButtonBox" name="button_box">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>70</x>
      <y>240</y>
-     <width>341</width>
+     <width>221</width>
      <height>32</height>
     </rect>
    </property>
@@ -31,12 +29,83 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_header">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>0</y>
+     <width>131</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Новий товар</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>281</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="grid">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetFixedSize</enum>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_name">
+      <property name="text">
+       <string>Назва товару</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="input_good_name"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_good_type">
+      <property name="text">
+       <string>Тип товару</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_new_type">
+      <property name="text">
+       <string>Новий тип</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="input_new_type"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="box_good_type"/>
+    </item>
+    <item row="1" column="2">
+     <widget class="QToolButton" name="button_add_type">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
- <pixmapfunction/>
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>button_box</sender>
    <signal>accepted()</signal>
    <receiver>addproduct</receiver>
    <slot>accept()</slot>
@@ -52,7 +121,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>button_box</sender>
    <signal>rejected()</signal>
    <receiver>addproduct</receiver>
    <slot>reject()</slot>
