@@ -12,6 +12,7 @@
 #include "loginwindow.h"
 #include "addproduct.h"
 #include "tools.h"
+#include "enhancedtablewidget.h"
 
 namespace Ui {
 class MainWindow;

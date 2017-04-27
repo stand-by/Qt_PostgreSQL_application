@@ -207,12 +207,14 @@ void MainWindow::configure_tables() {
 void MainWindow::refresh_table_goods_list() {
     QString query = "SELECT * FROM goods_list;";
     this->fill_table_with_query(ui->table_goods_list, query);
+    ui->table_goods_list->refresh();
     tools::enhance_table_with_cell_tooltip(ui->table_goods_list);
 }
 
 void MainWindow::refresh_table_purchase_goods() {
     QString query = "SELECT * FROM short_purchase_goods;";
     this->fill_table_with_query(ui->table_purchase_goods, query);
+    ui->table_purchase_goods->refresh();
     tools::enhance_table_with_cell_tooltip(ui->table_purchase_goods);
 
     ui->table_purchase_goods->clearSelection();
@@ -223,6 +225,7 @@ void MainWindow::refresh_table_purchase_goods() {
 void MainWindow::refresh_table_sell_goods() {
     QString query = "SELECT * FROM short_sell_goods;";
     this->fill_table_with_query(ui->table_sell_goods, query);
+    ui->table_sell_goods->refresh();
     tools::enhance_table_with_cell_tooltip(ui->table_sell_goods);
 
     ui->table_sell_goods->clearSelection();
@@ -233,6 +236,7 @@ void MainWindow::refresh_table_sell_goods() {
 void MainWindow::refresh_table_move_goods() {
     QString query = "SELECT * FROM short_move_goods;";
     this->fill_table_with_query(ui->table_move_goods, query);
+    ui->table_move_goods->refresh();
     tools::enhance_table_with_cell_tooltip(ui->table_move_goods);
 
     ui->table_move_goods->clearSelection();
@@ -243,18 +247,21 @@ void MainWindow::refresh_table_move_goods() {
 void MainWindow::refresh_table_details_purchase_goods(int id_doc) {
     QString query = QString("SELECT * FROM goods_details_on_document(%1);").arg(id_doc);
     this->fill_table_with_query(ui->table_datails_purchase_goods, query);
+    ui->table_datails_purchase_goods->refresh();
     tools::enhance_table_with_cell_tooltip(ui->table_datails_purchase_goods);
 }
 
 void MainWindow::refresh_table_details_sell_goods(int id_doc) {
     QString query = QString("SELECT * FROM goods_details_on_document(%1);").arg(id_doc);
     this->fill_table_with_query(ui->table_details_sell_goods, query);
+    ui->table_details_sell_goods->refresh();
     tools::enhance_table_with_cell_tooltip(ui->table_details_sell_goods);
 }
 
 void MainWindow::refresh_table_details_move_goods(int id_doc) {
     QString query = QString("SELECT * FROM goods_details_on_document(%1);").arg(id_doc);
     this->fill_table_with_query(ui->table_details_move_goods, query);
+    ui->table_details_move_goods->refresh();
     tools::enhance_table_with_cell_tooltip(ui->table_details_move_goods);
 }
 

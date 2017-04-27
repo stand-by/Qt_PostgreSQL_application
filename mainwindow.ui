@@ -62,7 +62,7 @@
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <widget class="QTableWidget" name="table_goods_list">
+         <widget class="EnhancedTableWidget" name="table_goods_list">
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
           </property>
@@ -140,7 +140,7 @@
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <widget class="QTableWidget" name="table_purchase_goods">
+         <widget class="EnhancedTableWidget" name="table_purchase_goods">
           <column>
            <property name="text">
             <string>Номер договору</string>
@@ -202,7 +202,7 @@
          </layout>
         </item>
         <item row="0" column="1">
-         <widget class="QTableWidget" name="table_datails_purchase_goods">
+         <widget class="EnhancedTableWidget" name="table_datails_purchase_goods">
           <column>
            <property name="text">
             <string>Номер</string>
@@ -245,7 +245,7 @@
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <widget class="QTableWidget" name="table_sell_goods">
+         <widget class="EnhancedTableWidget" name="table_sell_goods">
           <column>
            <property name="text">
             <string>Номер договору</string>
@@ -307,7 +307,7 @@
          </layout>
         </item>
         <item row="0" column="1">
-         <widget class="QTableWidget" name="table_details_sell_goods">
+         <widget class="EnhancedTableWidget" name="table_details_sell_goods">
           <column>
            <property name="text">
             <string>Номер</string>
@@ -350,7 +350,7 @@
          <number>0</number>
         </property>
         <item row="0" column="0">
-         <widget class="QTableWidget" name="table_move_goods">
+         <widget class="EnhancedTableWidget" name="table_move_goods">
           <column>
            <property name="text">
             <string>Номер документа</string>
@@ -400,7 +400,7 @@
          </layout>
         </item>
         <item row="0" column="1">
-         <widget class="QTableWidget" name="table_details_move_goods">
+         <widget class="EnhancedTableWidget" name="table_details_move_goods">
           <column>
            <property name="text">
             <string>Номер</string>
@@ -426,6 +426,13 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>EnhancedTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>enhancedtablewidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
