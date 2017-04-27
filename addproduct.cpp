@@ -12,6 +12,7 @@ addproduct::addproduct(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(n
     //initial window config
     this->setModal(true);
     this->setWindowTitle("Додати новий товар");
+    this->setFixedSize(this->size());
 
     //query two columns of one table into two different models
     model_names = new QSqlQueryModel(this);
