@@ -27,6 +27,11 @@ private slots:
     void on_button_refresh_purchase_goods_clicked();
     void on_button_refresh_sell_goods_clicked();
     void on_button_refresh_move_goods_clicked();
+
+    void on_table_purchase_goods_itemSelectionChanged();
+    void on_table_sell_goods_itemSelectionChanged();
+    void on_table_move_goods_itemSelectionChanged();
+
     void on_button_add_goods_list_clicked();
 
 private:
@@ -46,6 +51,10 @@ private:
     void refresh_table_purchase_goods();
     void refresh_table_sell_goods();
     void refresh_table_move_goods();
+
+    void refresh_table_details_purchase_goods(int id_doc);
+    void refresh_table_details_sell_goods(int id_doc);
+    void refresh_table_details_move_goods(int id_doc);
 
     void prompt_error(QString text, bool exit_flag = false);
     void fill_table_with_query(QTableWidget *tab, QString query);
