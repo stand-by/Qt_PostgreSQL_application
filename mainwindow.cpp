@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     this->create_db_connection();
 
     //window config
-    this->center_and_resize_window(1000,600);
+    this->center_and_resize_window(1200,600);
     this->setWindowTitle("Магазин Автозапчастин");
 
     //ui config
@@ -164,6 +164,22 @@ void MainWindow::configure_tables() {
         ui->table_sell_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
     for (int i = 0; i < ui->table_move_goods->horizontalHeader()->count(); ++i)
         ui->table_move_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+
+    //similar configurations for parametric tables
+    ui->table_datails_purchase_goods->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->table_details_sell_goods->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->table_details_move_goods->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    ui->table_datails_purchase_goods->setSelectionMode(QAbstractItemView::NoSelection);
+    ui->table_details_sell_goods->setSelectionMode(QAbstractItemView::NoSelection);
+    ui->table_details_move_goods->setSelectionMode(QAbstractItemView::NoSelection);
+
+    for (int i = 0; i < ui->table_datails_purchase_goods->horizontalHeader()->count(); ++i)
+        ui->table_datails_purchase_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+    for (int i = 0; i < ui->table_details_sell_goods->horizontalHeader()->count(); ++i)
+        ui->table_details_sell_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+    for (int i = 0; i < ui->table_details_move_goods->horizontalHeader()->count(); ++i)
+        ui->table_details_move_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
 
     /*
     //remove indexing column
