@@ -204,17 +204,17 @@ void MainWindow::refresh_table_goods_list() {
 }
 
 void MainWindow::refresh_table_purchase_goods() {
-    QString query = "SELECT * FROM purchase_goods;";
+    QString query = "SELECT * FROM short_purchase_goods;";
     this->fill_table_with_query(ui->table_purchase_goods, query);
 }
 
 void MainWindow::refresh_table_sell_goods() {
-    QString query = "SELECT * FROM sell_goods;";
+    QString query = "SELECT * FROM short_sell_goods;";
     this->fill_table_with_query(ui->table_sell_goods, query);
 }
 
 void MainWindow::refresh_table_move_goods() {
-    QString query = "SELECT * FROM move_goods;";
+    QString query = "SELECT * FROM short_move_goods;";
     this->fill_table_with_query(ui->table_move_goods, query);
 }
 
