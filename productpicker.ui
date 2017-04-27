@@ -1,38 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>ProductPicker</class>
  <widget class="QDialog" name="ProductPicker">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>421</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <widget class="QLabel" name="label_header">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
-     <height>32</height>
+     <x>80</x>
+     <y>10</y>
+     <width>281</width>
+     <height>31</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   <property name="text">
+    <string>Обрати товар з перелiку</string>
    </property>
   </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>401</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="grid_top">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEdit_search"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_search">
+      <property name="text">
+       <string>Пошук за назвою</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="pushButton_search">
+      <property name="text">
+       <string>Знайти</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="EnhancedTableWidget" name="table_goods">
+      <column>
+       <property name="text">
+        <string>Код товару</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Назва товару</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Тип товару</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>410</y>
+     <width>400</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="grid_bottom">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="pushButton_addproduct">
+      <property name="text">
+       <string>Додати новий товар</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <spacer name="spacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>48</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="2">
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <customwidgets>
+  <customwidget>
+   <class>EnhancedTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>enhancedtablewidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
