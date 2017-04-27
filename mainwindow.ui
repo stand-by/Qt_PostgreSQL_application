@@ -39,7 +39,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="tabBarAutoHide">
        <bool>false</bool>
@@ -161,21 +161,6 @@
             <string>Отримувач</string>
            </property>
           </column>
-          <column>
-           <property name="text">
-            <string>Назва товару</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Кiлькiсть</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Цiна за од.</string>
-           </property>
-          </column>
          </widget>
         </item>
         <item row="1" column="0">
@@ -184,20 +169,6 @@
            <widget class="QPushButton" name="button_contractor_purchase_goods">
             <property name="text">
              <string>Додати контрагента</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="button_refresh_purchase_goods">
-            <property name="text">
-             <string>Оновити</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="button_add_purchase_goods">
-            <property name="text">
-             <string>Додати замовлення</string>
             </property>
            </widget>
           </item>
@@ -214,7 +185,45 @@
             </property>
            </spacer>
           </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="button_add_purchase_goods">
+            <property name="text">
+             <string>Додати замовлення</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="button_refresh_purchase_goods">
+            <property name="text">
+             <string>Оновити</string>
+            </property>
+           </widget>
+          </item>
          </layout>
+        </item>
+        <item row="0" column="1">
+         <widget class="QTableWidget" name="table_datails_purchase_goods">
+          <column>
+           <property name="text">
+            <string>Номер</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Назва товару</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Кiлькiсть</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Цiна за од.</string>
+           </property>
+          </column>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -235,6 +244,30 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="table_sell_goods">
+          <column>
+           <property name="text">
+            <string>Номер договору</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Постачальник</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Отримувач</string>
+           </property>
+          </column>
+         </widget>
+        </item>
         <item row="1" column="0">
          <layout class="QGridLayout" name="grid_sell_goods">
           <item row="0" column="2">
@@ -273,26 +306,11 @@
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
-         <widget class="QTableWidget" name="table_sell_goods">
+        <item row="0" column="1">
+         <widget class="QTableWidget" name="table_details_sell_goods">
           <column>
            <property name="text">
-            <string>Номер договору</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Дата</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Постачальник</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Отримувач</string>
+            <string>Номер</string>
            </property>
           </column>
           <column>
@@ -331,6 +349,25 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item row="0" column="0">
+         <widget class="QTableWidget" name="table_move_goods">
+          <column>
+           <property name="text">
+            <string>Номер документа</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Дата</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Тип</string>
+           </property>
+          </column>
+         </widget>
+        </item>
         <item row="1" column="0">
          <layout class="QGridLayout" name="grid_move_goods">
           <item row="0" column="0">
@@ -362,21 +399,11 @@
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
-         <widget class="QTableWidget" name="table_move_goods">
+        <item row="0" column="1">
+         <widget class="QTableWidget" name="table_details_move_goods">
           <column>
            <property name="text">
-            <string>Номер документа</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Дата</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Тип</string>
+            <string>Номер</string>
            </property>
           </column>
           <column>
