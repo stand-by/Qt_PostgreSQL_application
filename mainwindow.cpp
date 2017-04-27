@@ -149,11 +149,17 @@ void MainWindow::configure_tables() {
     ui->table_sell_goods->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->table_move_goods->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    //ban cell selection
+    //ban cell selection only for goods table
     ui->table_goods_list->setSelectionMode(QAbstractItemView::NoSelection);
-    ui->table_purchase_goods->setSelectionMode(QAbstractItemView::NoSelection);
-    ui->table_sell_goods->setSelectionMode(QAbstractItemView::NoSelection);
-    ui->table_move_goods->setSelectionMode(QAbstractItemView::NoSelection);
+    //allow only single row selection
+    ui->table_purchase_goods->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->table_sell_goods->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->table_move_goods->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    //set row selection for purchase, sell and move tables
+    ui->table_purchase_goods->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->table_sell_goods->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->table_move_goods->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     //stretch columns to fill whole window
     for (int i = 0; i < ui->table_goods_list->horizontalHeader()->count(); ++i)
