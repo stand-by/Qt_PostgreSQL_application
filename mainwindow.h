@@ -11,6 +11,7 @@
 
 #include "loginwindow.h"
 #include "addproduct.h"
+#include "productpicker.h"
 #include "tools.h"
 #include "enhancedtablewidget.h"
 
@@ -36,6 +37,8 @@ private slots:
     void on_table_move_goods_itemSelectionChanged();
 
     void on_button_add_goods_list_clicked();
+
+    void on_button_contractor_purchase_goods_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -320,3 +320,25 @@ void MainWindow::on_table_move_goods_itemSelectionChanged() {
     this->refresh_table_details_move_goods(id_doc);
     this->configure_tables();
 }
+
+//TEMPORARY STUFF
+void MainWindow::on_button_contractor_purchase_goods_clicked()
+{
+    //craches when click Cancel
+    ProductPicker* form = new ProductPicker(this, db);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
+
+    if(form->is_valid()) {
+        qDebug() << form->pick_product_id();
+        qDebug() << form->pick_product_name();
+        qDebug() << form->pick_product_type();
+    } else {
+        //prompt error
+    }
+
+    delete form;
+
+    //we don't need this when work with ordering
+    this->refresh_table_purchase_goods();
+    this->configure_tables();
+}
