@@ -19,12 +19,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     loginwindow.cpp \
-    addproduct.cpp
+    addproduct.cpp \
+    enhancedtablewidget.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
     addproduct.h \
-    tools.h
+    tools.h \
+    enhancedtablewidget.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
