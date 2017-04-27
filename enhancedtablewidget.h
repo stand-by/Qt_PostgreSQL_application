@@ -13,14 +13,21 @@ private:
     QString asc_color;
     QString desc_color;
 
+    int filter_column;
+    bool is_filtering;
+
+    void fill_column_with_color(int index, QString color);
+    void make_bold_column(int col);
+    void make_notbold_column(int col);
+
 public:
     EnhancedTableWidget(QWidget* obj);
     virtual ~EnhancedTableWidget() {}
     void refresh();
-    void fill_column_with_color(int index, QString color);
 
 private slots:
     void handle_header_click(int index);
+    void handle_cell_doubleclick(int row, int column);
 };
 
 #endif // ENHANCEDTABLEWIDGET_H
