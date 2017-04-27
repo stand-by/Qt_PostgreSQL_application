@@ -85,7 +85,8 @@ void MainWindow::get_user_credentials() {
 
     else {
         qDebug() << "Login Rejected";
-        QApplication::quit();
+        QApplication::closeAllWindows();
+        exit(0);
     }
 }
 
