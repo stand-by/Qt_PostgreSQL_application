@@ -8,8 +8,10 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include <QTableWidget>
+
 #include "loginwindow.h"
 #include "addproduct.h"
+#include "tools.h"
 
 namespace Ui {
 class MainWindow;

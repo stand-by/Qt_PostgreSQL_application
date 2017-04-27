@@ -23,7 +23,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
-    addproduct.h
+    addproduct.h \
+    tools.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
