@@ -60,7 +60,7 @@ void EnhancedTableWidget::handle_cell_doubleclick(int row, int column) {
         for(int i = 0; i < this->rowCount(); i++)
             this->hideRow(this->item(i, column)->row());
         for(int i = 0; i < items.count(); i++)
-            this->showRow(items.at(i)->row());
+            if(items.at(i)->column()==column) this->showRow(items.at(i)->row());
 
         is_filtering = true;
         filter_column = column;
