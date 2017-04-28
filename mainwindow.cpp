@@ -30,7 +30,29 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     //disable insert actions when logged in as inspector
     if(login == "inspector") this->change_observer_mode(false);
 }
+/*
+//TEMPORARY STUFF
+void MainWindow::on_button_contractor_purchase_goods_clicked()
+{
+    //craches when click Cancel
+    ProductPicker* form = new ProductPicker(this, db);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
 
+    if(form->is_valid()) {
+        qDebug() << form->pick_product_id();
+        qDebug() << form->pick_product_name();
+        qDebug() << form->pick_product_type();
+    } else {
+        //prompt error
+    }
+
+    delete form;
+
+    //we don't need this when work with ordering
+    this->refresh_table_purchase_goods();
+    this->configure_tables();
+}
+*/
 MainWindow::~MainWindow() {
     delete ui;
 }
@@ -294,6 +316,24 @@ void MainWindow::on_button_add_goods_list_clicked() {
     this->configure_tables();
 }
 
+void MainWindow::on_button_contractor_sell_goods_clicked() {
+    ContractorWindow* form = new ContractorWindow(this, db);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
+    delete form;
+
+    this->refresh_table_sell_goods();
+    this->configure_tables();
+}
+
+void MainWindow::on_button_contractor_purchase_goods_clicked() {
+    ContractorWindow* form = new ContractorWindow(this, db);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
+    delete form;
+
+    this->refresh_table_purchase_goods();
+    this->configure_tables();
+}
+
 void MainWindow::on_table_purchase_goods_itemSelectionChanged() {
     int row_number = ui->table_purchase_goods->selectionModel()->currentIndex().row();
     QModelIndex index = ui->table_purchase_goods->model()->index(row_number,0,QModelIndex());
@@ -318,27 +358,5 @@ void MainWindow::on_table_move_goods_itemSelectionChanged() {
     int id_doc = ui->table_move_goods->model()->data(index).toInt();
 
     this->refresh_table_details_move_goods(id_doc);
-    this->configure_tables();
-}
-
-//TEMPORARY STUFF
-void MainWindow::on_button_contractor_purchase_goods_clicked()
-{
-    //craches when click Cancel
-    ProductPicker* form = new ProductPicker(this, db);
-    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
-
-    if(form->is_valid()) {
-        qDebug() << form->pick_product_id();
-        qDebug() << form->pick_product_name();
-        qDebug() << form->pick_product_type();
-    } else {
-        //prompt error
-    }
-
-    delete form;
-
-    //we don't need this when work with ordering
-    this->refresh_table_purchase_goods();
     this->configure_tables();
 }
