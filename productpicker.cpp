@@ -3,6 +3,7 @@
 
 ProductPicker::ProductPicker(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(new Ui::ProductPicker) {
     ui->setupUi(this);
+    disconnect(ui->table_goods, SIGNAL(cellDoubleClicked(int,int)), ui->table_goods, SLOT(handle_cell_doubleclick(int,int)));
 
     db = db_;
     is_filled = false;
@@ -53,10 +54,13 @@ void ProductPicker::on_pushButton_search_clicked() {
         for(int i = 0; i < items.count(); i++)
             if(items.at(i)->column()==1) ui->table_goods->showRow(items.at(i)->row());
 
+        ui->table_goods->selectionModel()->reset();
+        ui->lineEdit_search->setEnabled(false);
         ui->pushButton_search->setText("Скасувати");
         is_searching = true;
     } else {
         is_searching = false;
+        ui->lineEdit_search->setEnabled(true);
         ui->lineEdit_search->setText("");
         ui->pushButton_search->setText("Знайти");
         show_whole_table();
@@ -74,6 +78,7 @@ void ProductPicker::on_pushButton_addproduct_clicked() {
     //go back
     is_searching = false;
     ui->lineEdit_search->setText("");
+    ui->lineEdit_search->setEnabled(true);
     ui->pushButton_search->setText("Знайти");
     show_whole_table();
 }
