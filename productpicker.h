@@ -28,7 +28,6 @@ public:
 private slots:
     void on_pushButton_addproduct_clicked();
     void on_buttonBox_accepted();
-
     void on_pushButton_search_clicked();
 
 private:
@@ -41,11 +40,15 @@ private:
     QString product_name;
     QString product_type;
 
+    void enable_search();
+    void disable_search();
+    void show_whole_table();
+
     void refresh();
     void config();
+
     void prompt_error(QString text, bool exit_flag = false);
     void fill_table_with_query(QTableWidget *tab, QString query);
-    void show_whole_table();
 };
 
 #endif // PRODUCTPICKER_H

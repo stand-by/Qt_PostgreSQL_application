@@ -27,6 +27,21 @@ int ProductPicker::pick_product_id() { return product_id; }
 QString ProductPicker::pick_product_name() { return product_name; }
 QString ProductPicker::pick_product_type() { return product_type; }
 
+void ProductPicker::enable_search() {
+    is_searching = true;
+    ui->table_goods->selectionModel()->reset();
+    ui->lineEdit_search->setEnabled(false);
+    ui->pushButton_search->setText("Скасувати");
+}
+
+void ProductPicker::disable_search() {
+    is_searching = false;
+    ui->lineEdit_search->setEnabled(true);
+    ui->lineEdit_search->setText("");
+    ui->pushButton_search->setText("Знайти");
+    show_whole_table();
+}
+
 void ProductPicker::on_buttonBox_accepted(){
     //qDebug() << ui->table_goods->selectionModel()->currentIndex();
     int row = ui->table_goods->selectionModel()->currentIndex().row();
@@ -54,16 +69,10 @@ void ProductPicker::on_pushButton_search_clicked() {
         for(int i = 0; i < items.count(); i++)
             if(items.at(i)->column()==1) ui->table_goods->showRow(items.at(i)->row());
 
-        ui->table_goods->selectionModel()->reset();
-        ui->lineEdit_search->setEnabled(false);
-        ui->pushButton_search->setText("Скасувати");
-        is_searching = true;
+        enable_search();
+
     } else {
-        is_searching = false;
-        ui->lineEdit_search->setEnabled(true);
-        ui->lineEdit_search->setText("");
-        ui->pushButton_search->setText("Знайти");
-        show_whole_table();
+        disable_search();
     }
 }
 
@@ -75,12 +84,8 @@ void ProductPicker::on_pushButton_addproduct_clicked() {
     refresh();
     config();
 
-    //go back
-    is_searching = false;
-    ui->lineEdit_search->setText("");
-    ui->lineEdit_search->setEnabled(true);
-    ui->pushButton_search->setText("Знайти");
-    show_whole_table();
+    ui->table_goods->selectionModel()->reset();
+    disable_search();
 }
 
 void ProductPicker::refresh() {
@@ -99,6 +104,10 @@ void ProductPicker::config() {
         ui->table_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
 }
 
+void ProductPicker::show_whole_table() {
+    for(int i = 0; i < ui->table_goods->rowCount(); i++)
+        ui->table_goods->showRow(ui->table_goods->item(i, 0)->row());
+}
 
 void ProductPicker::fill_table_with_query(QTableWidget *tab, QString query){
     QSqlQuery sql_query = db.exec(query);
@@ -127,11 +136,6 @@ void ProductPicker::fill_table_with_query(QTableWidget *tab, QString query){
 
         tab->resizeColumnsToContents();
     }
-}
-
-void ProductPicker::show_whole_table() {
-    for(int i = 0; i < ui->table_goods->rowCount(); i++)
-        ui->table_goods->showRow(ui->table_goods->item(i, 0)->row());
 }
 
 void ProductPicker::prompt_error(QString text, bool exit_flag) {
