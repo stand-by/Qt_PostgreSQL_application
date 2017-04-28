@@ -21,16 +21,19 @@ SOURCES += main.cpp\
     loginwindow.cpp \
     addproduct.cpp \
     enhancedtablewidget.cpp \
-    productpicker.cpp
+    productpicker.cpp \
+    contractorwindow.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
     addproduct.h \
     tools.h \
     enhancedtablewidget.h \
-    productpicker.h
+    productpicker.h \
+    contractorwindow.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
     addproduct.ui \
-    productpicker.ui
+    productpicker.ui \
+    contractorwindow.ui
