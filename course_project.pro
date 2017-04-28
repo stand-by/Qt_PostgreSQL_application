@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     enhancedtablewidget.cpp \
     productpicker.cpp \
     contractorwindow.cpp \
-    orderwindow.cpp
+    orderwindow.cpp \
+    spinboxdelegate.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     enhancedtablewidget.h \
     productpicker.h \
     contractorwindow.h \
-    orderwindow.h
+    orderwindow.h \
+    spinboxdelegate.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
