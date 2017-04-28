@@ -1,15 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>OrderWindow</class>
  <widget class="QDialog" name="OrderWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>582</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +16,9 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
+     <x>70</x>
+     <y>450</y>
+     <width>501</width>
      <height>32</height>
     </rect>
    </property>
@@ -31,8 +29,123 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_header">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>10</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Замовлення</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="table_goods">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>561</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Код товару</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Назва товару</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Тип товару</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Кiлькiсть</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Цiна за од.</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>561</width>
+     <height>95</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="grid">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_contractor">
+      <property name="text">
+       <string>Контрагент</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <layout class="QHBoxLayout" name="horizontal">
+      <item>
+       <widget class="QComboBox" name="comboBox_contractors"/>
+      </item>
+      <item>
+       <widget class="QToolButton" name="button_addcontractor">
+        <property name="text">
+         <string>+</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_order_date">
+      <property name="text">
+       <string>Дата замовлення</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QDateEdit" name="dateEdit_order_date">
+      <property name="displayFormat">
+       <string>dd.MM.yyyy</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_list">
+      <property name="text">
+       <string>Перелiк товарiв</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="button_addproduct">
+      <property name="text">
+       <string>Додати товар ↓</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
- <pixmapfunction/>
  <resources/>
  <connections>
   <connection>
