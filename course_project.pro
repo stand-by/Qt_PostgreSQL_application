@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     addproduct.cpp \
     enhancedtablewidget.cpp \
     productpicker.cpp \
-    contractorwindow.cpp
+    contractorwindow.cpp \
+    orderwindow.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
@@ -30,10 +31,12 @@ HEADERS  += mainwindow.h \
     tools.h \
     enhancedtablewidget.h \
     productpicker.h \
-    contractorwindow.h
+    contractorwindow.h \
+    orderwindow.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
     addproduct.ui \
     productpicker.ui \
-    contractorwindow.ui
+    contractorwindow.ui \
+    orderwindow.ui
