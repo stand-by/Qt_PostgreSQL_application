@@ -23,7 +23,8 @@ OrderWindow::OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag): QDialog(
 }
 
 OrderWindow::~OrderWindow() {
-    delete delegate;
+    delete spin_delegate;
+    delete doublespin_delegate;
     delete model_names;
     delete model_ids;
     delete ui;
@@ -54,7 +55,7 @@ void OrderWindow::on_buttonBox_accepted() {
     }
 
     if(is_purchase_mode) {
-        QString s = QString("SELECT add_purchase_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::INT[],'%5');")
+        QString s = QString("SELECT add_purchase_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::numeric[],'%5');")
                             .arg(contractor_id,id_goods_list,id_amount_list,id_price_list,date);
         QSqlQuery sq = db.exec(s);
 
@@ -68,7 +69,7 @@ void OrderWindow::on_buttonBox_accepted() {
 
 
     } else {
-        QString s = QString("SELECT add_sell_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::INT[],'%5');")
+        QString s = QString("SELECT add_sell_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::numeric[],'%5');")
                             .arg(contractor_id,id_goods_list,id_amount_list,id_price_list,date);
         QSqlQuery sq = db.exec(s);
 
@@ -114,7 +115,7 @@ void OrderWindow::append_to_goods_table(int id, QString name, QString type) {
 
     item = new QTableWidgetItem("1",QTableWidgetItem::Type);
     ui->table_goods->setItem(ui->table_goods->rowCount()-1,3,item);
-    item = new QTableWidgetItem("1",QTableWidgetItem::Type);
+    item = new QTableWidgetItem("1,00",QTableWidgetItem::Type);
     ui->table_goods->setItem(ui->table_goods->rowCount()-1,4,item);
 }
 
@@ -127,8 +128,11 @@ void OrderWindow::refresh() {
 }
 
 void OrderWindow::config() {
-    delegate = new SpinBoxDelegate(this);
-    ui->table_goods->setItemDelegate(delegate);
+    spin_delegate = new SpinBoxDelegate(this);
+    ui->table_goods->setItemDelegateForColumn(3,spin_delegate);
+    doublespin_delegate = new DoubleSpinBoxDelegate(this);
+    //ui->table_goods->setItemDelegateForColumn(4,doublespin_delegate);
+    ui->table_goods->setItemDelegateForColumn(4,spin_delegate);
 
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);
     for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
