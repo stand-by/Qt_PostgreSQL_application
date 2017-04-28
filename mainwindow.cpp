@@ -30,29 +30,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     //disable insert actions when logged in as inspector
     if(login == "inspector") this->change_observer_mode(false);
 }
-/*
-//TEMPORARY STUFF
-void MainWindow::on_button_contractor_purchase_goods_clicked()
-{
-    //craches when click Cancel
-    ProductPicker* form = new ProductPicker(this, db);
-    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
 
-    if(form->is_valid()) {
-        qDebug() << form->pick_product_id();
-        qDebug() << form->pick_product_name();
-        qDebug() << form->pick_product_type();
-    } else {
-        //prompt error
-    }
-
-    delete form;
-
-    //we don't need this when work with ordering
-    this->refresh_table_purchase_goods();
-    this->configure_tables();
-}
-*/
 MainWindow::~MainWindow() {
     delete ui;
 }
@@ -315,6 +293,25 @@ void MainWindow::on_button_add_goods_list_clicked() {
     this->refresh_table_goods_list();
     this->configure_tables();
 }
+
+void MainWindow::on_button_add_purchase_goods_clicked() {
+    OrderWindow* form = new OrderWindow(this, db, true);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
+    delete form;
+
+    this->refresh_table_purchase_goods();
+    this->configure_tables();
+}
+
+void MainWindow::on_button_add_sell_goods_clicked() {
+    OrderWindow* form = new OrderWindow(this, db, false);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
+    delete form;
+
+    this->refresh_table_sell_goods();
+    this->configure_tables();
+}
+
 
 void MainWindow::on_button_contractor_sell_goods_clicked() {
     ContractorWindow* form = new ContractorWindow(this, db);

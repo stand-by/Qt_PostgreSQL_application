@@ -15,6 +15,7 @@
 #include "tools.h"
 #include "enhancedtablewidget.h"
 #include "contractorwindow.h"
+#include "orderwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +42,10 @@ private slots:
 
     void on_button_contractor_purchase_goods_clicked();
     void on_button_contractor_sell_goods_clicked();
+
+    void on_button_add_purchase_goods_clicked();
+
+    void on_button_add_sell_goods_clicked();
 
 private:
     Ui::MainWindow *ui;
