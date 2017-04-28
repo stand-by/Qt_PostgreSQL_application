@@ -55,7 +55,7 @@ void OrderWindow::on_buttonBox_accepted() {
     }
 
     if(is_purchase_mode) {
-        QString s = QString("SELECT add_purchase_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::numeric[],'%5');")
+        QString s = QString("SELECT add_purchase_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::numeric(10,2)[],'%5');")
                             .arg(contractor_id,id_goods_list,id_amount_list,id_price_list,date);
         QSqlQuery sq = db.exec(s);
 
@@ -69,7 +69,7 @@ void OrderWindow::on_buttonBox_accepted() {
 
 
     } else {
-        QString s = QString("SELECT add_sell_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::numeric[],'%5');")
+        QString s = QString("SELECT add_sell_order(%1,'{%2}'::INT[],'{%3}'::INT[],'{%4}'::numeric(10,2)[],'%5');")
                             .arg(contractor_id,id_goods_list,id_amount_list,id_price_list,date);
         QSqlQuery sq = db.exec(s);
 
@@ -115,7 +115,7 @@ void OrderWindow::append_to_goods_table(int id, QString name, QString type) {
 
     item = new QTableWidgetItem("1",QTableWidgetItem::Type);
     ui->table_goods->setItem(ui->table_goods->rowCount()-1,3,item);
-    item = new QTableWidgetItem("1,00",QTableWidgetItem::Type);
+    item = new QTableWidgetItem("1",QTableWidgetItem::Type);
     ui->table_goods->setItem(ui->table_goods->rowCount()-1,4,item);
 }
 

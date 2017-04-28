@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     productpicker.cpp \
     contractorwindow.cpp \
     orderwindow.cpp \
-    spinboxdelegate.cpp
+    spinboxdelegate.cpp \
+    moveorder.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
@@ -34,11 +35,13 @@ HEADERS  += mainwindow.h \
     productpicker.h \
     contractorwindow.h \
     orderwindow.h \
-    spinboxdelegate.h
+    spinboxdelegate.h \
+    moveorder.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
     addproduct.ui \
     productpicker.ui \
     contractorwindow.ui \
-    orderwindow.ui
+    orderwindow.ui \
+    moveorder.ui

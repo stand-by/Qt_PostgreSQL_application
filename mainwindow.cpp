@@ -312,6 +312,14 @@ void MainWindow::on_button_add_sell_goods_clicked() {
     this->configure_tables();
 }
 
+void MainWindow::on_button_add_move_goods_clicked() {
+    MoveOrder* form = new MoveOrder(this, db);
+    while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
+    delete form;
+
+    this->refresh_table_move_goods();
+    this->configure_tables();
+}
 
 void MainWindow::on_button_contractor_sell_goods_clicked() {
     ContractorWindow* form = new ContractorWindow(this, db);
