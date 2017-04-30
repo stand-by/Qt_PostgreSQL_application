@@ -5,9 +5,9 @@
 #include <QtSql>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include <QSpinBox>
 #include "contractorwindow.h"
 #include "productpicker.h"
-#include "spinboxdelegate.h"
 
 namespace Ui {
 class MoveOrder;
@@ -28,7 +28,6 @@ private slots:
 private:
     Ui::MoveOrder *ui;
     QSqlDatabase db;
-    SpinBoxDelegate *spin_delegate;
 
     bool is_filled;
 

@@ -23,7 +23,6 @@ OrderWindow::OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag): QDialog(
 }
 
 OrderWindow::~OrderWindow() {
-    delete spin_delegate;
     delete model_names;
     delete model_ids;
     delete ui;
@@ -43,8 +42,8 @@ void OrderWindow::on_buttonBox_accepted() {
 
     for(int i = 0; i < ui->table_goods->rowCount(); i++) {
         id_goods_list += ui->table_goods->item(i, 0)->text();
-        id_amount_list += ui->table_goods->item(i, 3)->text();
-        id_price_list += ui->table_goods->item(i, 4)->text();
+        id_amount_list += QString::number(static_cast<QSpinBox*>(ui->table_goods->cellWidget(i,3))->value());
+        id_price_list += QString::number(static_cast<QSpinBox*>(ui->table_goods->cellWidget(i,4))->value());
 
         if(i != ui->table_goods->rowCount()-1) {
             id_goods_list += ",";
@@ -112,25 +111,26 @@ void OrderWindow::append_to_goods_table(int id, QString name, QString type) {
     item->setFlags(item->flags() ^ Qt::ItemIsEditable);
     ui->table_goods->setItem(ui->table_goods->rowCount()-1,2,item);
 
-    item = new QTableWidgetItem("1",QTableWidgetItem::Type);
-    ui->table_goods->setItem(ui->table_goods->rowCount()-1,3,item);
-    item = new QTableWidgetItem("1",QTableWidgetItem::Type);
-    ui->table_goods->setItem(ui->table_goods->rowCount()-1,4,item);
+    QSpinBox* spin = new QSpinBox(ui->table_goods);
+    spin->setValue(1);
+    spin->setMinimum(1);
+    spin->setMaximum(1000);
+    ui->table_goods->setCellWidget(ui->table_goods->rowCount()-1,3,spin);
+
+    int min_price = 11;
+
+    spin = new QSpinBox(ui->table_goods);
+    spin->setValue(min_price);
+    spin->setMinimum(min_price);
+    spin->setMaximum(1000000);
+    ui->table_goods->setCellWidget(ui->table_goods->rowCount()-1,4,spin);
 }
 
 bool OrderWindow::is_valid() {
     return is_filled;
 }
 
-void OrderWindow::refresh() {
-
-}
-
 void OrderWindow::config() {
-    spin_delegate = new SpinBoxDelegate(this);
-    ui->table_goods->setItemDelegateForColumn(3,spin_delegate);
-    ui->table_goods->setItemDelegateForColumn(4,spin_delegate);
-
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);
     for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
         ui->table_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);

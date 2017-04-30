@@ -5,9 +5,9 @@
 #include <QtSql>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include <QSpinBox>
 #include "contractorwindow.h"
 #include "productpicker.h"
-#include "spinboxdelegate.h"
 
 namespace Ui {
 class OrderWindow;
@@ -30,7 +30,6 @@ private slots:
 private:
     Ui::OrderWindow *ui;
     QSqlDatabase db;
-    SpinBoxDelegate *spin_delegate;
 
     QSqlQueryModel *model_names;
     QSqlQueryModel *model_ids;
@@ -39,7 +38,6 @@ private:
     bool is_purchase_mode;
 
     void config();
-    void refresh();
     void prompt_error(QString text, bool exit_flag = false);
     void fill_contractors_combobox();
     void append_to_goods_table(int id, QString name, QString type);

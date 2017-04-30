@@ -40,7 +40,7 @@ void MoveOrder::on_buttonBox_accepted() {
 
     for(int i = 0; i < ui->table_goods->rowCount(); i++) {
         id_goods_list += ui->table_goods->item(i, 0)->text();
-        id_amount_list += ui->table_goods->item(i, 3)->text();
+        id_amount_list += QString::number(static_cast<QSpinBox*>(ui->table_goods->cellWidget(i,3))->value());
 
         if(i != ui->table_goods->rowCount()-1) {
             id_goods_list += ",";
@@ -72,9 +72,6 @@ void MoveOrder::on_button_addproduct_clicked() {
 }
 
 void MoveOrder::config() {
-    spin_delegate = new SpinBoxDelegate(this);
-    ui->table_goods->setItemDelegateForColumn(3,spin_delegate);
-
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);
     for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
         ui->table_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
@@ -106,6 +103,9 @@ void MoveOrder::append_to_goods_table(int id, QString name, QString type) {
     item->setFlags(item->flags() ^ Qt::ItemIsEditable);
     ui->table_goods->setItem(ui->table_goods->rowCount()-1,2,item);
 
-    item = new QTableWidgetItem("1",QTableWidgetItem::Type);
-    ui->table_goods->setItem(ui->table_goods->rowCount()-1,3,item);
+    QSpinBox* spin = new QSpinBox(ui->table_goods);
+    spin->setValue(1);
+    spin->setMinimum(1);
+    spin->setMaximum(1000);
+    ui->table_goods->setCellWidget(ui->table_goods->rowCount()-1,3,spin);
 }
