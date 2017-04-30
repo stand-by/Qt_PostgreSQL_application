@@ -24,7 +24,6 @@ OrderWindow::OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag): QDialog(
 
 OrderWindow::~OrderWindow() {
     delete spin_delegate;
-    delete doublespin_delegate;
     delete model_names;
     delete model_ids;
     delete ui;
@@ -130,8 +129,6 @@ void OrderWindow::refresh() {
 void OrderWindow::config() {
     spin_delegate = new SpinBoxDelegate(this);
     ui->table_goods->setItemDelegateForColumn(3,spin_delegate);
-    doublespin_delegate = new DoubleSpinBoxDelegate(this);
-    //ui->table_goods->setItemDelegateForColumn(4,doublespin_delegate);
     ui->table_goods->setItemDelegateForColumn(4,spin_delegate);
 
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);

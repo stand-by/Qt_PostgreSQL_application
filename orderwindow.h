@@ -31,7 +31,6 @@ private:
     Ui::OrderWindow *ui;
     QSqlDatabase db;
     SpinBoxDelegate *spin_delegate;
-    DoubleSpinBoxDelegate *doublespin_delegate;
 
     QSqlQueryModel *model_names;
     QSqlQueryModel *model_ids;
