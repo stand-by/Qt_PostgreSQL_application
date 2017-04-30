@@ -41,6 +41,7 @@ private:
     void prompt_error(QString text, bool exit_flag = false);
     void fill_contractors_combobox();
     void append_to_goods_table(int id, QString name, QString type);
+    double get_minimal_price(int id_good);
 };
 
 #endif // ORDERWINDOW_H

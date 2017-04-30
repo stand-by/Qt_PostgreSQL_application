@@ -117,13 +117,29 @@ void OrderWindow::append_to_goods_table(int id, QString name, QString type) {
     spin->setMaximum(1000);
     ui->table_goods->setCellWidget(ui->table_goods->rowCount()-1,3,spin);
 
-    int min_price = 11;
+    int min_price = ceil(get_minimal_price(id));
 
     spin = new QSpinBox(ui->table_goods);
     spin->setValue(min_price);
     spin->setMinimum(min_price);
     spin->setMaximum(1000000);
     ui->table_goods->setCellWidget(ui->table_goods->rowCount()-1,4,spin);
+}
+
+double OrderWindow::get_minimal_price(int id_good) {
+    QString s = QString("SELECT calculate_minimal_price_for_product(%1);").arg(id_good);
+    QSqlQuery sq = db.exec(s);
+
+    qDebug() << s;
+    sq.first();
+    double val = sq.value(0).toDouble();
+
+    if(db.lastError().isValid()) {
+        qDebug() << db.lastError();
+        prompt_error("Виникла помилка! Неможливо пiдрахувати мiнiмальну цiну для цього товару!",true);
+    }
+
+    return val;
 }
 
 bool OrderWindow::is_valid() {
