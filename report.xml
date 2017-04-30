@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NCReport version="2.6.1" name="asdf" type="report">
+    <options>
+        <encoding>utf8</encoding>
+        <language>00</language>
+        <langrole>0</langrole>
+        <orientation>landscape</orientation>
+        <pagesize width="297.000" height="210.000">A4</pagesize>
+        <topmargin>15</topmargin>
+        <bottommargin>15</bottommargin>
+        <leftmargin>20</leftmargin>
+        <rightmargin>20</rightmargin>
+        <fontname>Liberation Sans</fontname>
+        <fontsize>10</fontsize>
+        <backcolor>#ffffff</backcolor>
+        <columns>0</columns>
+        <columnspace>0</columnspace>
+        <zoneSpacing>0</zoneSpacing>
+    </options>
+    <datasources>
+        <datasource id="s1" type="list" openRole="begin" source="static" columnDelimiter="semicolon" listID="model1"></datasource>
+    </datasources>
+    <variables/>
+    <pageheader id="phead" height="10.000">
+        <label id="0" zValue="0" resource="static" posX="0.000"   posY="4.762" width="50.000" height="4.762" fontName="Liberation Sans" fontSize="10" alignment="1" forecolor="#000000">Код товару</label>
+        <label id="1" zValue="1" resource="static" posX="50.000"  posY="4.762" width="100.000" height="4.762" fontName="Liberation Sans" fontSize="10" alignment="1" forecolor="#000000">Назва товару</label>
+        <label id="2" zValue="2" resource="static" posX="150.000"  posY="4.762" width="50.000" height="4.762" fontName="Liberation Sans" fontSize="10" alignment="1" forecolor="#000000">Тип товару</label>
+        <line  id="6" zValue="6" resource="static" fromX="0.000"  fromY="9.525" toX="210.000" toY="9.525" lineColor="#000000" lineStyle="solid" lineWidth="0.100"/>
+    </pageheader>
+    <pagefooter id="pfoot" height="10.000">
+        <line id="0" zValue="0" resource="static" fromX="0.000" fromY="3.175" toX="300.000" toY="3.175" lineColor="#000000" lineStyle="solid" lineWidth="0.100"/>
+    </pagefooter>
+    <details>
+        <detail id="Detail1" height="5.027" datasource="s1" startsOnNewPage="false">
+            <items>
+                <field id="0" zValue="0" resource="static" posX="0.000"   posY="0.000" width="50.000" height="4.762" fontName="Liberation Sans" fontSize="10" alignment="1" forecolor="#000000" type="txt" ftype="ds" arg="">0</field>
+                <field id="1" zValue="1" resource="static" posX="50.000"  posY="0.000" width="100.000" height="4.762" fontName="Liberation Sans" fontSize="10" alignment="1" forecolor="#000000" type="txt" ftype="ds" arg="">1</field>
+                <field id="2" zValue="2" resource="static" posX="150.000"  posY="0.000" width="50.000" height="4.762" fontName="Liberation Sans" fontSize="10" alignment="1" forecolor="#000000" type="txt" ftype="ds" arg="">2</field>
+            </items>
+        </detail>
+    </details>
+</NCReport>

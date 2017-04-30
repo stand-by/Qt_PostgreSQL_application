@@ -365,3 +365,40 @@ void MainWindow::on_table_move_goods_itemSelectionChanged() {
     this->refresh_table_details_move_goods(id_doc);
     this->configure_tables();
 }
+
+void MainWindow::on_pushButton_clicked() {
+    QStringList list;
+    QString query;
+
+    query = QString("SELECT * FROM goods_list");
+    qDebug() << query;
+    QSqlQuery sq = db.exec(query);
+    QString res;
+
+    while (sq.next()){
+        res = "";
+        for(int i=0; i<3 ;i++)
+        res += sq.value(i).toString() + "; ";
+        qDebug() << res;
+        list << res;
+    }
+
+    NCReport *report = new NCReport();
+    qDebug() << list;
+    report->setReportFile("/home/eugene/DB_coursework/course_project/report.xml");
+    report->addStringList(list, "model1");
+    report->runReportToPreview();
+
+    if (report->hasError()) {
+        qDebug() << "ERROR:" << report->lastErrorMsg();
+        this->prompt_error("Данні про даний тип відсутності порожні");
+    } else {
+        NCReportPreviewWindow *pv = new NCReportPreviewWindow();
+        pv->setOutput( (NCReportPreviewOutput*)report->output() );
+        pv->setWindowModality( Qt::ApplicationModal );
+        pv->setAttribute( Qt::WA_DeleteOnClose );
+        pv->show();
+    }
+
+    delete report;
+}

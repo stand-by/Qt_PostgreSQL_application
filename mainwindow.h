@@ -18,6 +18,11 @@
 #include "orderwindow.h"
 #include "moveorder.h"
 
+#include "ncreport.h"
+#include "ncreportoutput.h"
+#include "ncreportpreviewoutput.h"
+#include "ncreportpreviewwindow.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -49,6 +54,8 @@ private slots:
     void on_button_add_sell_goods_clicked();
 
     void on_button_add_move_goods_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

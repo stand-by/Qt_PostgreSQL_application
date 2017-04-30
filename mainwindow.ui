@@ -98,14 +98,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="button_add_goods_list">
-            <property name="text">
-             <string>Додати товар</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
+          <item row="0" column="3">
            <spacer name="spacer_goods_list">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -117,6 +110,20 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="button_add_goods_list">
+            <property name="text">
+             <string>Додати товар</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Створити звiт</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
