@@ -1,7 +1,5 @@
 #include "enhancedtablewidget.h"
 
-#include <QHeaderView>
-
 EnhancedTableWidget::EnhancedTableWidget(QWidget* obj): QTableWidget(obj) {
     connect(this->horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(handle_header_click(int)));
     connect(this, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(handle_cell_doubleclick(int,int)));
@@ -12,6 +10,16 @@ EnhancedTableWidget::EnhancedTableWidget(QWidget* obj): QTableWidget(obj) {
     refresh();
 }
 
+void EnhancedTableWidget::config_default_behavior() {
+    this->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    this->setSelectionMode(QAbstractItemView::SingleSelection);
+    this->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    for (int i = 0; i < this->horizontalHeader()->count(); ++i)
+        this->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+}
+
+//initialize_sorting
 void EnhancedTableWidget::refresh() {
     previous_index = 0;
     asc_sort_order = true;
@@ -23,9 +31,55 @@ void EnhancedTableWidget::refresh() {
         this->showRow(this->item(i, 0)->row());
 }
 
+void EnhancedTableWidget::render_cell_tooltip() {
+    for (int i=0; i < this->rowCount(); i++)
+        for (int j=0; j < this->columnCount(); j++) {
+            QTableWidgetItem *item =  this->item(i,j);
+            item->setToolTip(item->text());
+        }
+}
+
+//HANDLE RETURN VALUE
+bool EnhancedTableWidget::fill_table_with_query(QSqlDatabase db, QString query) {
+    QSqlQuery sql_query = db.exec(query);
+
+    if(sql_query.lastError().isValid()) {
+        qDebug() << sql_query.lastError();
+        return false;
+        //prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+    }
+
+    else {
+        int n = this->columnCount();
+        this->setRowCount(sql_query.size());
+        sql_query.first();
+
+        int row = 0;
+        do {
+            for (int i = 0; i < n; i++){
+                QTableWidgetItem* item = new QTableWidgetItem();
+                item->setText(sql_query.value(i).toString());
+                this->setItem(row, i, item);
+            }
+            row++;
+        } while (sql_query.next());
+
+        this->resizeColumnsToContents();
+
+        this->refresh();
+        this->render_cell_tooltip();
+        return true;
+    }
+}
+
 void EnhancedTableWidget::fill_column_with_color(int index, QString color) {
     for(int i = 0; i < this->rowCount(); i++)
         this->item(i, index)->setBackground(QBrush(QColor(color)));
+}
+
+void EnhancedTableWidget::show_whole_table() {
+    for(int i = 0; i < this->rowCount(); i++)
+        this->showRow(this->item(i, 0)->row());
 }
 
 void EnhancedTableWidget::make_bold_column(int col) {
@@ -68,8 +122,6 @@ void EnhancedTableWidget::handle_cell_doubleclick(int row, int column) {
 }
 
 void EnhancedTableWidget::handle_header_click(int index) {
-    //qDebug() << "header clicked "+QString::number(index);
-
     if(previous_index == index) {
         if(!asc_sort_order) {
             this->sortByColumn(index, Qt::AscendingOrder);
