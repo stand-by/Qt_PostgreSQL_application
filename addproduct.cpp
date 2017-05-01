@@ -24,10 +24,6 @@ addproduct::addproduct(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(n
     ui->box_good_type->setModel(model_names);
     ui->box_good_type->setCurrentIndex(0);
     ui->box_good_type->view()->setCurrentIndex(model_names->index(0,0));
-
-    //for debug purposes
-    //for(int i = 0; i < model_names->rowCount(); ++i)
-    //    qDebug() << model_ids->record(i).value(0).toString() << model_names->record(i).value(0).toString();
 }
 
 addproduct::~addproduct() {

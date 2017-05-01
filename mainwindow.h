@@ -22,6 +22,7 @@ namespace Ui {
 class MainWindow;
 }
 
+//class that manages all forms and shows all necessary tables
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -45,9 +46,7 @@ private slots:
     void on_button_contractor_sell_goods_clicked();
 
     void on_button_add_purchase_goods_clicked();
-
     void on_button_add_sell_goods_clicked();
-
     void on_button_add_move_goods_clicked();
 
 private:
@@ -58,8 +57,8 @@ private:
     QString ip;
     QString port;
 
-    void configure_tabs();
-    void configure_tab_widget();
+    void configure_tabs_style();
+    void configure_tab_widget_style();
     void configure_tables();
     void center_and_resize_window(int w, int h);
 
@@ -73,7 +72,6 @@ private:
     void refresh_table_details_move_goods(int id_doc);
 
     void prompt_error(QString text, bool exit_flag = false);
-    void fill_table_with_query(QTableWidget *tab, QString query);
     void change_observer_mode(bool state);
 
     void get_user_credentials();

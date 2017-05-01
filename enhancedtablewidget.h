@@ -30,7 +30,7 @@ public:
 
     void config_default_behavior();
     void render_cell_tooltip();
-    void refresh(); //RENAME initialize_sorting
+    void initialize_sorting();
 
     void fill_column_with_color(int index, QString color);
     bool fill_table_with_query(QSqlDatabase db, QString query);

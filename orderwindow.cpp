@@ -18,7 +18,7 @@ OrderWindow::OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag): QDialog(
     ui->dateEdit_order_date->setDate(QDate::currentDate());
     ui->dateEdit_order_date->setEnabled(false);
 
-    config();
+    config_table();
     fill_contractors_combobox();
 }
 
@@ -146,7 +146,7 @@ bool OrderWindow::is_valid() {
     return is_filled;
 }
 
-void OrderWindow::config() {
+void OrderWindow::config_table() {
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);
     for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
         ui->table_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);

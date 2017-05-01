@@ -7,7 +7,7 @@ EnhancedTableWidget::EnhancedTableWidget(QWidget* obj): QTableWidget(obj) {
     asc_color = "#e3f5ab";
     desc_color = "#febbbb";
 
-    refresh();
+    initialize_sorting();
 }
 
 void EnhancedTableWidget::config_default_behavior() {
@@ -19,8 +19,7 @@ void EnhancedTableWidget::config_default_behavior() {
         this->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
 }
 
-//initialize_sorting
-void EnhancedTableWidget::refresh() {
+void EnhancedTableWidget::initialize_sorting() {
     previous_index = 0;
     asc_sort_order = true;
     fill_column_with_color(0,asc_color);
@@ -66,7 +65,7 @@ bool EnhancedTableWidget::fill_table_with_query(QSqlDatabase db, QString query) 
 
         this->resizeColumnsToContents();
 
-        this->refresh();
+        this->initialize_sorting();
         this->render_cell_tooltip();
         return true;
     }

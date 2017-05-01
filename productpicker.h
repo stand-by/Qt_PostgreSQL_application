@@ -3,16 +3,14 @@
 
 #include <QDialog>
 #include <QtSql>
-#include <QSqlQueryModel>
-#include <QDesktopWidget>
 #include <QMessageBox>
 #include "addproduct.h"
-#include "tools.h"
 
 namespace Ui {
 class ProductPicker;
 }
 
+//class for choosing product from product list
 class ProductPicker : public QDialog {
     Q_OBJECT
 
@@ -21,6 +19,8 @@ public:
     ~ProductPicker();
 
     bool is_valid();
+
+    //methods for obtaining necessary info about selected product
     int pick_product_id();
     QString pick_product_name();
     QString pick_product_type();
@@ -36,19 +36,14 @@ private:
 
     bool is_searching;
     bool is_filled;
+
     int product_id;
     QString product_name;
     QString product_type;
 
     void enable_search();
     void disable_search();
-    void show_whole_table();
-
-    void refresh();
-    void config();
-
     void prompt_error(QString text, bool exit_flag = false);
-    void fill_table_with_query(QTableWidget *tab, QString query);
 };
 
 #endif // PRODUCTPICKER_H

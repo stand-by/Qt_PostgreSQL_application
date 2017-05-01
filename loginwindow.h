@@ -8,6 +8,7 @@ namespace Ui {
 class LoginWindow;
 }
 
+//class for login form which allows to get login and password that user typed
 class LoginWindow : public QDialog {
     Q_OBJECT
 

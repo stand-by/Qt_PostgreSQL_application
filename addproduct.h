@@ -10,8 +10,8 @@ namespace Ui {
 class addproduct;
 }
 
-class addproduct : public QDialog
-{
+//class for adding new product and product type
+class addproduct : public QDialog {
     Q_OBJECT
 
 public:

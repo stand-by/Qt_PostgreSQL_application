@@ -9,8 +9,8 @@ namespace Ui {
 class ContractorWindow;
 }
 
-class ContractorWindow : public QDialog
-{
+//class for adding new contractor
+class ContractorWindow : public QDialog {
     Q_OBJECT
 
 public:

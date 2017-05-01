@@ -13,6 +13,7 @@ namespace Ui {
 class MoveOrder;
 }
 
+//class that allows to create move order for goods
 class MoveOrder : public QDialog {
     Q_OBJECT
 
@@ -31,7 +32,7 @@ private:
 
     bool is_filled;
 
-    void config();
+    void config_table();
     void prompt_error(QString text, bool exit_flag = false);
     void append_to_goods_table(int id, QString name, QString type);
 };

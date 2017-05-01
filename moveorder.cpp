@@ -14,7 +14,7 @@ MoveOrder::MoveOrder(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(new
     ui->dateEdit_order_date->setDate(QDate::currentDate());
     ui->dateEdit_order_date->setEnabled(false);
 
-    config();
+    config_table();
 }
 
 MoveOrder::~MoveOrder() {
@@ -32,6 +32,7 @@ void MoveOrder::on_buttonBox_accepted() {
     }
 
     QString type_id = "-1";
+    //hardcoded ids for appropriate types
     if(ui->comboBox_types->currentText()=="Переміщення з складу в магазин") type_id = "3";
     else if(ui->comboBox_types->currentText()=="Переміщення з магазину в склад") type_id = "4";
     QString date = ui->dateEdit_order_date->text();
@@ -71,7 +72,7 @@ void MoveOrder::on_button_addproduct_clicked() {
     delete form;
 }
 
-void MoveOrder::config() {
+void MoveOrder::config_table() {
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);
     for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
         ui->table_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);

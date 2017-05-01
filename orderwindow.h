@@ -13,8 +13,8 @@ namespace Ui {
 class OrderWindow;
 }
 
-class OrderWindow : public QDialog
-{
+//class for filling purchase type or sell type of order
+class OrderWindow : public QDialog {
     Q_OBJECT
 
 public:
@@ -37,7 +37,7 @@ private:
     bool is_filled;
     bool is_purchase_mode;
 
-    void config();
+    void config_table();
     void prompt_error(QString text, bool exit_flag = false);
     void fill_contractors_combobox();
     void append_to_goods_table(int id, QString name, QString type);

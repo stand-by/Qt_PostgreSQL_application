@@ -14,8 +14,9 @@ ProductPicker::ProductPicker(QWidget *parent, QSqlDatabase db_): QDialog(parent)
     this->setWindowTitle("Перелiк товарiв");
     this->setFixedSize(this->size());
 
-    refresh();
-    config();
+    if(!ui->table_goods->fill_table_with_query(db,"SELECT * FROM goods_list;"))
+        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+    ui->table_goods->config_default_behavior();
 }
 
 ProductPicker::~ProductPicker() {
@@ -39,7 +40,7 @@ void ProductPicker::disable_search() {
     ui->lineEdit_search->setEnabled(true);
     ui->lineEdit_search->setText("");
     ui->pushButton_search->setText("Знайти");
-    show_whole_table();
+    ui->table_goods->show_whole_table();
 }
 
 void ProductPicker::on_buttonBox_accepted(){
@@ -81,61 +82,11 @@ void ProductPicker::on_pushButton_addproduct_clicked() {
     while(form->exec()!=QDialog::Rejected && !form->is_valid()) {};
     delete form;
 
-    refresh();
-    config();
+    ui->table_goods->fill_table_with_query(db,"SELECT * FROM goods_list;");
+    ui->table_goods->config_default_behavior();
 
     ui->table_goods->selectionModel()->reset();
     disable_search();
-}
-
-void ProductPicker::refresh() {
-    QString query = "SELECT * FROM goods_list;";
-    this->fill_table_with_query(ui->table_goods, query);
-    ui->table_goods->refresh();
-    tools::enhance_table_with_cell_tooltip(ui->table_goods);
-}
-
-void ProductPicker::config() {
-    ui->table_goods->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->table_goods->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->table_goods->setSelectionBehavior(QAbstractItemView::SelectRows);
-
-    for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
-        ui->table_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
-}
-
-void ProductPicker::show_whole_table() {
-    for(int i = 0; i < ui->table_goods->rowCount(); i++)
-        ui->table_goods->showRow(ui->table_goods->item(i, 0)->row());
-}
-
-void ProductPicker::fill_table_with_query(QTableWidget *tab, QString query){
-    QSqlQuery sql_query = db.exec(query);
-
-    //prompt error message, when sql query failed
-    if(sql_query.lastError().isValid()) {
-        qDebug() << sql_query.lastError();
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
-    }
-
-    //otherwise fill table
-    else {
-        int n = tab->columnCount();
-        tab->setRowCount(sql_query.size());
-        sql_query.first();
-
-        int row = 0;
-        do {
-            for (int i = 0; i < n; i++){
-                QTableWidgetItem* item = new QTableWidgetItem();
-                item->setText(sql_query.value(i).toString());
-                tab->setItem(row, i, item);
-            }
-            row++;
-        } while (sql_query.next());
-
-        tab->resizeColumnsToContents();
-    }
 }
 
 void ProductPicker::prompt_error(QString text, bool exit_flag) {

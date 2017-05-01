@@ -29,7 +29,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     loginwindow.h \
     addproduct.h \
-    tools.h \
     enhancedtablewidget.h \
     productpicker.h \
     contractorwindow.h \
