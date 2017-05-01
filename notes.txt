@@ -1,0 +1,561 @@
+////////////////////////////////////////////////////////VIEWS//////////////////////////////////////////////////////////
+
+CREATE VIEW contractors AS
+  SELECT id_contractor, surname as name, adress, identificational_code as code, phone_number as phone, 'physical' as table_type FROM physical_person
+  UNION
+  SELECT id_contractor, name_of_company_or_organization as name, adress, identification_code as code, phone_number as phone, 'juridical' as table_type FROM juridical_person
+  ORDER BY id_contractor;
+
+CREATE VIEW goods_list AS
+  SELECT id_goods, name_of_goods, name_of_type
+    FROM goods
+      LEFT JOIN type_of_goods ON goods.id_type_of_goods=type_of_goods.id_type_of_goods
+      ORDER BY id_goods;
+
+CREATE VIEW short_purchase_goods AS
+  SELECT document.id_document, document_date,
+    juridical_person.name_of_company_or_organization as supplier, department.name_of_company_or_organization as receiver
+    FROM document
+      LEFT JOIN type_of_document ON document.id_type_of_document=type_of_document.id_type_of_document
+      LEFT JOIN juridical_person ON document.id_contractor_from=juridical_person.id_contractor
+      LEFT JOIN department ON document.id_contractor_to=department.id_contractor
+      WHERE name_of_type = 'Закупка на склад'
+      ORDER BY document.id_document;
+
+CREATE VIEW short_sell_goods AS
+  SELECT document.id_document, document_date,
+    department.name_of_company_or_organization as supplier, contractors.name as receiver
+    FROM document
+      LEFT JOIN type_of_document ON document.id_type_of_document=type_of_document.id_type_of_document
+      LEFT JOIN (
+        SELECT id_contractor, surname as name FROM physical_person
+        UNION
+        SELECT id_contractor, name_of_company_or_organization as name FROM juridical_person
+        ) AS contractors ON document.id_contractor_to=contractors.id_contractor
+      LEFT JOIN department ON document.id_contractor_from=department.id_contractor
+      WHERE name_of_type = 'Продаж із магазину'
+      ORDER BY document.id_document;
+
+CREATE VIEW short_move_goods AS
+  SELECT document.id_document, document_date, name_of_type
+    FROM document
+      LEFT JOIN type_of_document ON document.id_type_of_document=type_of_document.id_type_of_document
+      WHERE name_of_type = 'Переміщення з складу в магазин' OR name_of_type = 'Переміщення з магазину в склад'
+      ORDER BY document.id_document;
+
+CREATE VIEW goods_amount_for_each_document_type AS
+  SELECT id_goods, id_type_of_document, SUM(amount) as amount
+  FROM document_on_the_move_of_goods
+    LEFT JOIN document ON document_on_the_move_of_goods.id_document = document.id_document
+  GROUP BY id_goods,id_type_of_document
+  ORDER BY id_goods,id_type_of_document;
+
+////////////////////////////////////////////DEPRECATED_VIEWS//////////////////////////////////////////////////////////
+
+CREATE VIEW purchase_goods AS
+  SELECT document.id_document, document_date,
+    juridical_person.name_of_company_or_organization as supplier, department.name_of_company_or_organization as receiver,
+    name_of_goods, amount, price
+    FROM document
+      LEFT JOIN document_on_the_move_of_goods ON document.id_document=document_on_the_move_of_goods.id_document
+      LEFT JOIN type_of_document ON document.id_type_of_document=type_of_document.id_type_of_document
+      LEFT JOIN goods ON document_on_the_move_of_goods.id_goods = goods.id_goods
+      LEFT JOIN juridical_person ON document.id_contractor_from=juridical_person.id_contractor --WE NEED ONLY JURIDICAL BECAUSE OF THE BUSINESS RULES
+      LEFT JOIN department ON document.id_contractor_to=department.id_contractor
+      WHERE name_of_type = 'Закупка на склад'
+      ORDER BY document.id_document;
+
+CREATE VIEW sell_goods AS
+  SELECT document.id_document, document_date,
+    department.name_of_company_or_organization as supplier, contractors.name as receiver,
+    name_of_goods, amount, price
+    FROM document
+      LEFT JOIN document_on_the_move_of_goods ON document.id_document=document_on_the_move_of_goods.id_document
+      LEFT JOIN type_of_document ON document.id_type_of_document=type_of_document.id_type_of_document
+      LEFT JOIN goods ON document_on_the_move_of_goods.id_goods = goods.id_goods
+      LEFT JOIN (
+        SELECT id_contractor, surname as name FROM physical_person
+        UNION
+        SELECT id_contractor, name_of_company_or_organization as name FROM juridical_person
+        ) AS contractors ON document.id_contractor_to=contractors.id_contractor
+      LEFT JOIN department ON document.id_contractor_from=department.id_contractor
+      WHERE name_of_type = 'Продаж із магазину'
+      ORDER BY document.id_document;
+
+CREATE VIEW move_goods AS
+  SELECT document.id_document, document_date, name_of_type, name_of_goods, amount
+    FROM document
+      LEFT JOIN document_on_the_move_of_goods ON document.id_document=document_on_the_move_of_goods.id_document
+      LEFT JOIN type_of_document ON document.id_type_of_document=type_of_document.id_type_of_document
+      LEFT JOIN goods ON document_on_the_move_of_goods.id_goods = goods.id_goods
+      WHERE name_of_type = 'Переміщення з складу в магазин' OR name_of_type = 'Переміщення з магазину в склад'
+      ORDER BY document.id_document;
+
+///////////////////////////////////////////////////PARAMETRIZED_VIEWS////////////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION goods_details_on_document(arg_id_doc INT)
+RETURNS TABLE(res_id_document_on_the_move_of_goods INT, res_name_of_goods VARCHAR(30), res_amount INT, res_price NUMERIC(10,2))
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY SELECT id_document_on_the_move_of_goods, name_of_goods, amount, price
+  FROM document_on_the_move_of_goods
+  LEFT JOIN goods ON document_on_the_move_of_goods.id_goods = goods.id_goods
+  WHERE document_on_the_move_of_goods.id_document = arg_id_doc
+  ORDER BY id_document_on_the_move_of_goods;
+END;
+$$
+
+SELECT * FROM goods_details_on_document(5);
+
+////////////////////////////////////////////////////TRIGGERS//////////////////////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION add_contractor_id()
+RETURNS TRIGGER AS $$
+declare
+id_var integer;
+BEGIN
+SELECT nextval('contractor_id_contractor_seq') INTO id_var;
+INSERT INTO contractor VALUES (id_var);
+NEW.id_contractor := id_var;
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER when_add_juridical_person
+BEFORE INSERT ON juridical_person
+FOR EACH ROW EXECUTE PROCEDURE add_contractor_id();
+CREATE TRIGGER when_add_physical_person
+BEFORE INSERT ON physical_person
+FOR EACH ROW EXECUTE PROCEDURE add_contractor_id();
+
+///////////////////////////////////////DEPRECATED_PROCEDURES//////////////////////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION add_purchase_order(arg_id_contractor INT, arg_id_goods INT, arg_amount INT, arg_price NUMERIC(10), arg_document_date DATE)
+RETURNS INT AS $$
+DECLARE
+  id_doc INT;
+  id_move_doc INT;
+  id_doc_type INT;
+BEGIN
+  IF arg_document_date>CURRENT_TIMESTAMP THEN
+    RAISE EXCEPTION 'Невірна дата замовлення';
+  END IF;
+
+  SELECT nextval('document_id_document_seq') INTO id_doc;
+  SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+  id_doc_type = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Закупка на склад');
+  INSERT INTO document VALUES (id_doc,arg_document_date,arg_id_contractor,id_doc_type,1);
+  INSERT INTO document_on_the_move_of_goods VALUES (arg_amount,arg_price,id_doc,arg_id_goods,id_move_doc);
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION add_sell_order(arg_id_contractor INT, arg_id_goods INT, arg_amount INT, arg_price NUMERIC(10), arg_document_date DATE)
+RETURNS INT AS $$
+DECLARE
+  id_doc INT;
+  id_move_doc INT;
+  id_doc_type INT;
+  amount_at_storage INT;
+  amount_at_shop INT;
+BEGIN
+  IF arg_document_date>CURRENT_TIMESTAMP THEN
+    RAISE EXCEPTION 'Невірна дата замовлення';
+  END IF;
+
+  id_doc_type = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Продаж із магазину');
+  SELECT count_good_amount_at_storage(arg_id_goods) INTO amount_at_storage;
+  SELECT count_good_amount_at_shop(arg_id_goods) INTO amount_at_shop;
+
+  IF amount_at_shop+amount_at_storage < arg_amount THEN
+    RAISE EXCEPTION 'Недостатньо цього товару, треба замовити у постачальника';
+  ELSEIF amount_at_shop < arg_amount AND amount_at_shop+amount_at_storage >= arg_amount THEN
+    RAISE EXCEPTION 'Недостатньо цього товару в магазині, але він є на складі. Треба перемістити зі складу в магазин';
+  ELSE
+    SELECT nextval('document_id_document_seq') INTO id_doc;
+    SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+    INSERT INTO document VALUES (id_doc,arg_document_date,2,id_doc_type,arg_id_contractor);
+    INSERT INTO document_on_the_move_of_goods VALUES (arg_amount,arg_price,id_doc,arg_id_goods,id_move_doc);
+    RETURN 0;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION add_move_order(arg_id_goods INT, arg_document_type_id INT, arg_amount INT, arg_document_date DATE)
+RETURNS INT AS $$
+DECLARE
+  id_doc INT;
+  id_move_doc INT;
+  id_doc_type_move_from_storage_to_shop INT;
+  id_doc_type_move_from_shop_to_storage INT;
+  amount_at_storage INT;
+  amount_at_shop INT;
+BEGIN
+  IF arg_document_date>CURRENT_TIMESTAMP THEN
+    RAISE EXCEPTION 'Невірна дата замовлення';
+  END IF;
+
+  id_doc_type_move_from_storage_to_shop = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Переміщення з складу в магазин');
+  id_doc_type_move_from_shop_to_storage = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Переміщення з магазину в склад');
+  SELECT count_good_amount_at_storage(arg_id_goods) INTO amount_at_storage;
+  SELECT count_good_amount_at_shop(arg_id_goods) INTO amount_at_shop;
+
+  IF arg_document_type_id = id_doc_type_move_from_storage_to_shop THEN
+    IF amount_at_storage < arg_amount THEN
+      RAISE EXCEPTION 'Цього товару недостатньо на складі, щоб перемістити його в магазин';
+    END IF;
+    SELECT nextval('document_id_document_seq') INTO id_doc;
+    SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+    INSERT INTO document VALUES (id_doc,arg_document_date,1,arg_document_type_id,2);
+    INSERT INTO document_on_the_move_of_goods VALUES (arg_amount,0,id_doc,arg_id_goods,id_move_doc);
+  RETURN 0;
+  END IF;
+
+  IF arg_document_type_id = id_doc_type_move_from_shop_to_storage THEN
+    IF amount_at_shop < arg_amount THEN
+      RAISE EXCEPTION 'Цього товару недостатньо в магазині, щоб перемістити його на склад';
+    END IF;
+    SELECT nextval('document_id_document_seq') INTO id_doc;
+    SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+    INSERT INTO document VALUES (id_doc,arg_document_date,2,arg_document_type_id,1);
+    INSERT INTO document_on_the_move_of_goods VALUES (arg_amount,0,id_doc,arg_id_goods,id_move_doc);
+  RETURN 0;
+  END IF;
+
+  RAISE EXCEPTION 'Переміщення товару не відбулося';
+END;
+$$ LANGUAGE plpgsql;
+
+///////////////////////////////////////////////////PROCEDURES//////////////////////////////////////////////////////////
+
+
+CREATE OR REPLACE FUNCTION count_good_amount_at_storage(arg_id_goods INT)
+RETURNS INT AS $$
+DECLARE
+  purchased_to_storage INT;
+  sold_from_shop INT;
+  moved_from_storage_to_shop INT;
+  moved_from_shop_to_storage INT;
+BEGIN
+  purchased_to_storage = (SELECT amount FROM goods_amount_for_each_document_type WHERE id_goods=arg_id_goods AND id_type_of_document=1);
+  IF purchased_to_storage IS NULL THEN purchased_to_storage=0;
+  END IF;
+  moved_from_storage_to_shop = (SELECT amount FROM goods_amount_for_each_document_type WHERE id_goods=arg_id_goods AND id_type_of_document=3);
+  IF moved_from_storage_to_shop IS NULL THEN moved_from_storage_to_shop=0;
+  END IF;
+  moved_from_shop_to_storage = (SELECT amount FROM goods_amount_for_each_document_type WHERE id_goods=arg_id_goods AND id_type_of_document=4);
+  IF moved_from_shop_to_storage IS NULL THEN moved_from_shop_to_storage=0;
+  END IF;
+  RETURN (purchased_to_storage+moved_from_shop_to_storage-moved_from_storage_to_shop);
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION count_good_amount_at_shop(arg_id_goods INT)
+RETURNS INT AS $$
+DECLARE
+  purchased_to_storage INT;
+  sold_from_shop INT;
+  moved_from_storage_to_shop INT;
+  moved_from_shop_to_storage INT;
+BEGIN
+  moved_from_storage_to_shop = (SELECT amount FROM goods_amount_for_each_document_type WHERE id_goods=arg_id_goods AND id_type_of_document=3);
+  IF moved_from_storage_to_shop IS NULL THEN moved_from_storage_to_shop=0;
+  END IF;
+  moved_from_shop_to_storage = (SELECT amount FROM goods_amount_for_each_document_type WHERE id_goods=arg_id_goods AND id_type_of_document=4);
+  IF moved_from_shop_to_storage IS NULL THEN moved_from_shop_to_storage=0;
+  END IF;
+  sold_from_shop = (SELECT amount FROM goods_amount_for_each_document_type WHERE id_goods=arg_id_goods AND id_type_of_document=2);
+  IF sold_from_shop IS NULL THEN sold_from_shop=0;
+  END IF;
+  RETURN (moved_from_storage_to_shop-moved_from_shop_to_storage-sold_from_shop);
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+create or REPLACE function add_type_of_goods(arg_name text) returns integer
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  id_type INT;
+BEGIN
+  SELECT nextval('type_of_goods_id_type_of_goods_seq') INTO id_type;
+  INSERT INTO type_of_goods VALUES (id_type,arg_name);
+  RETURN currval('type_of_goods_id_type_of_goods_seq');
+END;
+$$;
+
+
+
+CREATE OR REPLACE FUNCTION add_goods(arg_name TEXT, arg_id_type_of_goods INT)
+RETURNS INT AS $$
+DECLARE
+  id_type INT;
+BEGIN
+  SELECT nextval('goods_id_goods_seq') INTO id_type;
+  INSERT INTO goods VALUES (id_type,arg_name,arg_id_type_of_goods);
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION add_juridical_person(arg_name_of_company TEXT, arg_ident_code INT, arg_phone_number NUMERIC(15), arg_adress TEXT)
+RETURNS INT AS $$
+BEGIN
+  INSERT INTO juridical_person VALUES (arg_name_of_company,arg_ident_code,arg_phone_number,arg_adress,NULL);
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION add_physical_person(arg_surname TEXT, arg_name TEXT, arg_pathronymic TEXT, arg_birth_date DATE, arg_adress TEXT, arg_ident_code INT, arg_phone_number INT)
+RETURNS INT AS $$
+BEGIN
+  INSERT INTO physical_person VALUES (arg_surname,arg_name,arg_pathronymic,arg_birth_date,arg_adress,arg_ident_code,arg_phone_number,NULL);
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION summary_on_product(arg_id_goods INT)
+  RETURNS TABLE(document_date DATE, id_type_of_document INT, amount INT, price NUMERIC, total NUMERIC) AS $func$
+BEGIN
+
+FOR document_date, id_type_of_document, amount, price IN
+   SELECT document.document_date, document.id_type_of_document, d.amount, d.price
+   FROM   document_on_the_move_of_goods d
+   LEFT JOIN document ON document.id_document=d.id_document
+   WHERE  d.id_goods = arg_id_goods AND (document.id_type_of_document = 1 OR document.id_type_of_document = 2)
+   ORDER  BY document.document_date
+LOOP
+   total := amount * price;
+   RETURN NEXT;
+END LOOP;
+
+END
+$func$ LANGUAGE plpgsql STABLE
+
+
+
+CREATE OR REPLACE FUNCTION calculate_minimal_price_for_product(arg_id_good INT)
+RETURNS NUMERIC AS $$
+DECLARE
+  n INT;
+  date DATE;
+  type INT;
+  amount INT;
+  price NUMERIC;
+  sum NUMERIC;
+
+  curr_min NUMERIC;
+  total_price NUMERIC;
+  total_amount INT;
+BEGIN
+  SELECT count(*) FROM summary_on_product(arg_id_good) INTO n;
+  RAISE NOTICE '%',n;
+
+  IF n=0 THEN
+    RETURN 1.00;
+  END IF;
+
+  curr_min = 0;
+  total_amount = 0;
+  total_price = 0;
+  FOR date, type, amount, price, sum IN
+     (SELECT * FROM summary_on_product(arg_id_good))
+  LOOP
+    RAISE NOTICE '%, %, %, %, %',date, type, amount, price, sum;
+
+    IF type=1 THEN
+      total_price = total_price + sum;
+      total_amount = total_amount + amount;
+      RAISE NOTICE 'total_amount = % total_price = %',total_amount,total_price;
+    END IF;
+    IF type=2 THEN
+      curr_min = total_price/total_amount;
+      RAISE NOTICE 'curr_min = %',curr_min;
+      total_amount = total_amount - amount;
+      total_price = total_price - (curr_min*amount);
+      RAISE NOTICE 'total_amount = % total_price = %',total_amount,total_price;
+    END IF;
+
+  END LOOP;
+
+  curr_min = total_price/total_amount;
+  RETURN curr_min;
+END;
+$$ LANGUAGE plpgsql;
+
+//////////////////////////////////////////////////PROCEDURES_WITH_ARRAYS/////////////////////////////////////////
+
+CREATE OR REPLACE FUNCTION some_procedure(arg_int_array INT[])
+RETURNS INT AS $$
+DECLARE
+  id_doc INT;
+  id_move_doc INT;
+  id_doc_type INT;
+BEGIN
+
+  FOR i IN array_lower(arg_int_array, 1) .. array_upper(arg_int_array, 1)
+  LOOP
+     RAISE NOTICE '%',i;
+     RAISE NOTICE '%',arg_int_array[i];
+      INSERT INTO contractor VALUES(arg_int_array[i]);
+  END LOOP;
+
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION add_purchase_order(arg_id_contractor INT, arg_id_goods_array INT[], arg_amount_array INT[], arg_price_array NUMERIC(10,2)[], arg_document_date DATE)
+RETURNS INT AS $$
+DECLARE
+  id_doc INT;
+  id_move_doc INT;
+  id_doc_type INT;
+BEGIN
+  IF arg_document_date>CURRENT_TIMESTAMP THEN
+    RAISE EXCEPTION 'Невірна дата замовлення';
+  END IF;
+
+  id_doc_type = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Закупка на склад');
+  SELECT nextval('document_id_document_seq') INTO id_doc;
+  INSERT INTO document VALUES (id_doc,arg_document_date,arg_id_contractor,id_doc_type,1);
+
+  FOR i IN array_lower(arg_id_goods_array, 1) .. array_upper(arg_id_goods_array, 1)
+  LOOP
+    SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+    INSERT INTO document_on_the_move_of_goods VALUES (arg_amount_array[i],arg_price_array[i],id_doc,arg_id_goods_array[i],id_move_doc);
+  END LOOP;
+
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION add_sell_order(arg_id_contractor INT, arg_id_goods_array INT[], arg_amount_array INT[], arg_price_array NUMERIC(10,2)[], arg_document_date DATE)
+RETURNS INT AS $$
+DECLARE
+  id_doc INT;
+  id_move_doc INT;
+  id_doc_type INT;
+  amount_at_storage INT;
+  amount_at_shop INT;
+  name_of_the_good  TEXT;
+BEGIN
+  IF arg_document_date>CURRENT_TIMESTAMP THEN
+    RAISE EXCEPTION 'Невірна дата замовлення';
+  END IF;
+
+  id_doc_type = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Продаж із магазину');
+  SELECT nextval('document_id_document_seq') INTO id_doc;
+  INSERT INTO document VALUES (id_doc,arg_document_date,2,id_doc_type,arg_id_contractor);
+
+  FOR i IN array_lower(arg_id_goods_array, 1) .. array_upper(arg_id_goods_array, 1)
+  LOOP
+    SELECT count_good_amount_at_storage(arg_id_goods_array[i]) INTO amount_at_storage;
+    SELECT count_good_amount_at_shop(arg_id_goods_array[i]) INTO amount_at_shop;
+    SELECT name_of_goods FROM goods WHERE id_goods=arg_id_goods_array[i] INTO name_of_the_good;
+
+    SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+
+    IF amount_at_shop+amount_at_storage < arg_amount_array[i] THEN
+      PERFORM setval('document_id_document_seq',currval('document_id_document_seq')-1);
+      PERFORM setval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_',currval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_')-i);
+      RAISE EXCEPTION 'Недостатньо товару %, треба замовити у постачальника',name_of_the_good;
+    ELSEIF amount_at_shop < arg_amount_array[i] AND amount_at_shop+amount_at_storage >= arg_amount_array[i] THEN
+      PERFORM setval('document_id_document_seq',currval('document_id_document_seq')-1);
+      PERFORM setval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_',currval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_')-i);
+      RAISE EXCEPTION 'Недостатньо товару % в магазині, але він є на складі. Треба перемістити зі складу в магазин',name_of_the_good;
+    ELSE
+      INSERT INTO document_on_the_move_of_goods VALUES (arg_amount_array[i],arg_price_array[i],id_doc,arg_id_goods_array[i],id_move_doc);
+    END IF;
+  END LOOP;
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION add_move_order(arg_id_goods_array INT[], arg_document_type_id INT, arg_amount_array INT[], arg_document_date DATE)
+RETURNS INT AS $$
+DECLARE
+  id_doc INT;
+  id_move_doc INT;
+  id_doc_type_move_from_storage_to_shop INT;
+  id_doc_type_move_from_shop_to_storage INT;
+  amount_at_storage INT;
+  amount_at_shop INT;
+  name_of_the_good TEXT;
+BEGIN
+  IF arg_document_date>CURRENT_TIMESTAMP THEN
+    RAISE EXCEPTION 'Невірна дата замовлення';
+  END IF;
+
+  id_doc_type_move_from_storage_to_shop = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Переміщення з складу в магазин');
+  id_doc_type_move_from_shop_to_storage = (SELECT id_type_of_document FROM type_of_document WHERE name_of_type='Переміщення з магазину в склад');
+
+  IF arg_document_type_id = id_doc_type_move_from_storage_to_shop THEN
+    SELECT nextval('document_id_document_seq') INTO id_doc;
+    INSERT INTO document VALUES (id_doc,arg_document_date,1,arg_document_type_id,2);
+
+    FOR i IN array_lower(arg_id_goods_array, 1) .. array_upper(arg_id_goods_array, 1)
+    LOOP
+      SELECT count_good_amount_at_storage(arg_id_goods_array[i]) INTO amount_at_storage;
+      SELECT count_good_amount_at_shop(arg_id_goods_array[i]) INTO amount_at_shop;
+
+      SELECT name_of_goods FROM goods WHERE id_goods=arg_id_goods_array[i] INTO name_of_the_good;
+
+      SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+
+      IF amount_at_storage < arg_amount_array[i] THEN
+        PERFORM setval('document_id_document_seq',currval('document_id_document_seq')-1);
+        PERFORM setval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_',currval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_')-i);
+        RAISE EXCEPTION 'Товару % недостатньо на складі, щоб перемістити його в магазин',name_of_the_good;
+      END IF;
+
+      INSERT INTO document_on_the_move_of_goods VALUES (arg_amount_array[i],0,id_doc,arg_id_goods_array[i],id_move_doc);
+    END LOOP;
+    RETURN 0;
+  END IF;
+
+  IF arg_document_type_id = id_doc_type_move_from_shop_to_storage THEN
+    SELECT nextval('document_id_document_seq') INTO id_doc;
+    INSERT INTO document VALUES (id_doc,arg_document_date,2,arg_document_type_id,1);
+
+    FOR i IN array_lower(arg_id_goods_array, 1) .. array_upper(arg_id_goods_array, 1)
+    LOOP
+      SELECT count_good_amount_at_storage(arg_id_goods_array[i]) INTO amount_at_storage;
+      SELECT count_good_amount_at_shop(arg_id_goods_array[i]) INTO amount_at_shop;
+
+      SELECT name_of_goods FROM goods WHERE id_goods=arg_id_goods_array[i] INTO name_of_the_good;
+
+      SELECT nextval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_') INTO id_move_doc;
+
+      IF amount_at_shop < arg_amount_array[i] THEN
+        PERFORM setval('document_id_document_seq',currval('document_id_document_seq')-1);
+        PERFORM setval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_',currval('document_on_the_move_of_goods_id_document_on_the_move_of_goods_')-i);
+        RAISE EXCEPTION 'Товару % недостатньо в магазині, щоб перемістити його на склад',name_of_the_good;
+      END IF;
+
+      INSERT INTO document_on_the_move_of_goods VALUES (arg_amount_array[i],0,id_doc,arg_id_goods_array[i],id_move_doc);
+    END LOOP;
+    RETURN 0;
+  END IF;
+
+  RAISE EXCEPTION 'Переміщення товару не відбулося';
+END;
+$$ LANGUAGE plpgsql;
