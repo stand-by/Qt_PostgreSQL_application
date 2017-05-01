@@ -10,7 +10,7 @@ addproduct::addproduct(QWidget *parent, QSqlDatabase db_): QDialog(parent), Moda
 
     //initial window config
     this->setModal(true);
-    this->setWindowTitle("Додати новий товар");
+    this->setWindowTitle("Add new product");
     this->setFixedSize(this->size());
 
     //query two columns of one table into two different models
@@ -59,7 +59,7 @@ void addproduct::perform_type_insert() {
 
     if(db.lastError().isValid()) {
         qDebug() << db.lastError();
-        prompt_error("Додавання нового типу не вiдбулося");
+        prompt_error("Can not add new type!");
         return;
     }
 
@@ -75,17 +75,17 @@ void addproduct::perform_product_insert() {
     db.exec(query);
     if(db.lastError().isValid()) {
         qDebug() << db.lastError();
-        prompt_error("Додавання нового товару не вiдбулося");
+        prompt_error("Can not add new product!");
     }
 }
 
 void addproduct::on_button_box_accepted() {
     if(insert_new_type && ui->input_new_type->text()=="") {
-        prompt_error("Ви залишили пустi поля. Заповнiть форму знову!");
+        prompt_error("You have left empty fields!");
         return;
     }
     if(ui->input_good_name->text()=="") {
-        prompt_error("Ви залишили пустi поля. Заповнiть форму знову!");
+        prompt_error("You have left empty fields!");
         return;
     }
 

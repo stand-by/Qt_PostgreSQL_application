@@ -10,7 +10,7 @@ OrderWindow::OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag): QDialog(
     model_ids = new QSqlQueryModel(this);
 
     this->setModal(true);
-    this->setWindowTitle("Оформити замовлення");
+    this->setWindowTitle("Order");
     this->setFixedSize(this->size());
 
     ui->dateEdit_order_date->setDate(QDate::currentDate());
@@ -28,7 +28,7 @@ OrderWindow::~OrderWindow() {
 
 void OrderWindow::on_buttonBox_accepted() {
     if(ui->table_goods->rowCount()==0) {
-        prompt_error("Вам потрiбно обрати хоча б один товар, для того щоб оформити замовлення!");
+        prompt_error("You should choose at least one product to fill order!");
         return;
     }
 
@@ -58,7 +58,7 @@ void OrderWindow::on_buttonBox_accepted() {
         qDebug() << s;
         if(db.lastError().isValid()) {
             qDebug() << db.lastError();
-            prompt_error("Виникла помилка! Оформлення замовлення не вiдбулося!\n"+db.lastError().text().split("(P0001)").first());
+            prompt_error("An error occurred! Your order canceled!\n"+db.lastError().text().split("(P0001)").first());
         } else {
             is_filled = true;
         }
@@ -72,7 +72,7 @@ void OrderWindow::on_buttonBox_accepted() {
         qDebug() << s;
         if(db.lastError().isValid()) {
             qDebug() << db.lastError();
-            prompt_error("Виникла помилка! Оформлення замовлення не вiдбулося!\n"+db.lastError().text().split("(P0001)").first());
+            prompt_error("An error occurred! Your order canceled!\n"+db.lastError().text().split("(P0001)").first());
         } else {
             is_filled = true;
         }
@@ -134,7 +134,7 @@ double OrderWindow::get_minimal_price(int id_good) {
 
     if(db.lastError().isValid()) {
         qDebug() << db.lastError();
-        prompt_error("Виникла помилка! Неможливо пiдрахувати мiнiмальну цiну для цього товару!",true);
+        prompt_error("An error occurred! Can not calculate minimal price for this product!",true);
     }
 
     return val;

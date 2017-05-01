@@ -7,7 +7,7 @@ ModalFormBase::ModalFormBase(QSqlDatabase db_) {
 
 void ModalFormBase::prompt_error(QString text, bool exit_flag) {
     QMessageBox messageBox;
-    messageBox.critical(0,"Помилка",text);
+    messageBox.critical(0,"An error occurred",text);
     messageBox.setFixedSize(500,200);
     if(exit_flag) {
         QApplication::closeAllWindows();

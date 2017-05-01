@@ -9,11 +9,11 @@ ProductPicker::ProductPicker(QWidget *parent, QSqlDatabase db_): QDialog(parent)
     product_id = -1;
 
     this->setModal(true);
-    this->setWindowTitle("Перелiк товарiв");
+    this->setWindowTitle("Product list");
     this->setFixedSize(this->size());
 
     if(!ui->table_goods->fill_table_with_query(db,"SELECT * FROM goods_list;"))
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     ui->table_goods->config_default_behavior();
 }
 
@@ -29,14 +29,14 @@ void ProductPicker::enable_search() {
     is_searching = true;
     ui->table_goods->selectionModel()->reset();
     ui->lineEdit_search->setEnabled(false);
-    ui->pushButton_search->setText("Скасувати");
+    ui->pushButton_search->setText("Cancel");
 }
 
 void ProductPicker::disable_search() {
     is_searching = false;
     ui->lineEdit_search->setEnabled(true);
     ui->lineEdit_search->setText("");
-    ui->pushButton_search->setText("Знайти");
+    ui->pushButton_search->setText("Find");
     ui->table_goods->show_whole_table();
 }
 
@@ -46,7 +46,7 @@ void ProductPicker::on_buttonBox_accepted(){
     int col = ui->table_goods->selectionModel()->currentIndex().column();
 
     if(row < 0 || col < 0) {
-        prompt_error("Ви не обрали товар зi списку! Повторiть спробу ще раз!");
+        prompt_error("You haven't chosen any product from list! Try again!");
         return;
     }
 

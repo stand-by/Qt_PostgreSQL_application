@@ -38,14 +38,12 @@ void EnhancedTableWidget::render_cell_tooltip() {
         }
 }
 
-//HANDLE RETURN VALUE
 bool EnhancedTableWidget::fill_table_with_query(QSqlDatabase db, QString query) {
     QSqlQuery sql_query = db.exec(query);
 
     if(sql_query.lastError().isValid()) {
         qDebug() << sql_query.lastError();
         return false;
-        //prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
     }
 
     else {

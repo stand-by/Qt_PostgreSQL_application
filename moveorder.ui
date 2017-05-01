@@ -40,31 +40,31 @@
    </property>
    <column>
     <property name="text">
-     <string>Код товару</string>
+     <string>Product code</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Назва товару</string>
+     <string>Product name</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Тип товару</string>
+     <string>Product type</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Кiлькiсть</string>
+     <string>Amount</string>
     </property>
    </column>
   </widget>
   <widget class="QLabel" name="label_header">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>180</x>
      <y>10</y>
-     <width>131</width>
+     <width>211</width>
      <height>31</height>
     </rect>
    </property>
@@ -76,7 +76,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Замовлення</string>
+    <string>Transportation order</string>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
@@ -92,7 +92,7 @@
     <item row="0" column="0">
      <widget class="QLabel" name="label_type">
       <property name="text">
-       <string>Тип перемiщення</string>
+       <string>Transportation type</string>
       </property>
      </widget>
     </item>
@@ -102,12 +102,12 @@
        <widget class="QComboBox" name="comboBox_types">
         <item>
          <property name="text">
-          <string>Переміщення з складу в магазин</string>
+          <string>Transportation from storage to shop</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Переміщення з магазину в склад</string>
+          <string>Transportation from shop to storage</string>
          </property>
         </item>
        </widget>
@@ -117,7 +117,7 @@
     <item row="1" column="0">
      <widget class="QLabel" name="label_order_date">
       <property name="text">
-       <string>Дата замовлення</string>
+       <string>Order date</string>
       </property>
      </widget>
     </item>
@@ -131,14 +131,14 @@
     <item row="2" column="0">
      <widget class="QLabel" name="label_list">
       <property name="text">
-       <string>Перелiк товарiв</string>
+       <string>Product list</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
      <widget class="QPushButton" name="button_addproduct">
       <property name="text">
-       <string>Додати товар ↓</string>
+       <string>Add product ↓</string>
       </property>
      </widget>
     </item>

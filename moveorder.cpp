@@ -5,7 +5,7 @@ MoveOrder::MoveOrder(QWidget *parent, QSqlDatabase db_): QDialog(parent), ModalF
     ui->setupUi(this);
 
     this->setModal(true);
-    this->setWindowTitle("Оформити перемiщення");
+    this->setWindowTitle("Order");
     this->setFixedSize(this->size());
 
     ui->dateEdit_order_date->setDate(QDate::currentDate());
@@ -20,14 +20,14 @@ MoveOrder::~MoveOrder() {
 
 void MoveOrder::on_buttonBox_accepted() {
     if(ui->table_goods->rowCount()==0) {
-        prompt_error("Вам потрiбно обрати хоча б один товар, для того щоб оформити замовлення!");
+        prompt_error("You should choose at least one product to fill order!");
         return;
     }
 
     QString type_id = "-1";
     //hardcoded ids for appropriate types
-    if(ui->comboBox_types->currentText()=="Переміщення з складу в магазин") type_id = "3";
-    else if(ui->comboBox_types->currentText()=="Переміщення з магазину в склад") type_id = "4";
+    if(ui->comboBox_types->currentText()=="Transportation from storage to shop") type_id = "3";
+    else if(ui->comboBox_types->currentText()=="Transportation from shop to storage") type_id = "4";
     QString date = ui->dateEdit_order_date->text();
     QString id_goods_list = "";
     QString id_amount_list = "";
@@ -49,7 +49,7 @@ void MoveOrder::on_buttonBox_accepted() {
     qDebug() << s;
     if(db.lastError().isValid()) {
         qDebug() << db.lastError();
-        prompt_error("Виникла помилка! Оформлення замовлення не вiдбулося!\n"+db.lastError().text().split("(P0001)").first());
+        prompt_error("An error occurred! Your order canceled!\n"+db.lastError().text().split("(P0001)").first());
     } else {
         is_filled = true;
     }

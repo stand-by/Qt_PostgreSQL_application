@@ -5,7 +5,7 @@ ContractorWindow::ContractorWindow(QWidget *parent, QSqlDatabase db_): QDialog(p
     ui->setupUi(this);
 
     this->setModal(true);
-    this->setWindowTitle("Додати нового контрагента");
+    this->setWindowTitle("Add new contractor");
     this->setFixedSize(this->size());
 
     configure();
@@ -40,7 +40,7 @@ void ContractorWindow::perform_juridical_insert() {
     db.exec(query);
     if(db.lastError().isValid()) {
         qDebug() << db.lastError();
-        prompt_error("Додавання нового контрагента не вiдбулося");
+        prompt_error("Can not add new contractor");
     } else {
         is_filled = true;
     }
@@ -58,7 +58,7 @@ void ContractorWindow::perform_physical_insert() {
     db.exec(query);
     if(db.lastError().isValid()) {
         qDebug() << db.lastError();
-        prompt_error("Додавання нового контрагента не вiдбулося");
+        prompt_error("Can not add new contractor");
     } else {
         is_filled = true;
     }
@@ -68,7 +68,7 @@ void ContractorWindow::on_buttonBox_accepted() {
     //juridical case
     if(ui->tab_widget->currentIndex() == 0) {
         if(!validate_juridical()) {
-            prompt_error("Потрiбно дозаповнити форму!");
+            prompt_error("You have to fill out a form!");
             return;
         }
         perform_juridical_insert();
@@ -76,7 +76,7 @@ void ContractorWindow::on_buttonBox_accepted() {
     //physical case
     } else if(ui->tab_widget->currentIndex() == 1) {
         if(!validate_physical()) {
-            prompt_error("Потрiбно дозаповнити форму!");
+            prompt_error("You have to fill out a form!");
             return;
         }
         perform_physical_insert();

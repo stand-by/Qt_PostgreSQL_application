@@ -26,7 +26,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Ви увійшли як: </string>
+       <string>You entered as: </string>
       </property>
       <property name="margin">
        <number>4</number>
@@ -46,7 +46,7 @@
       </property>
       <widget class="QWidget" name="tab_goods_list">
        <attribute name="title">
-        <string>Список товарів</string>
+        <string>Product list</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
         <property name="leftMargin">
@@ -74,17 +74,17 @@
           </property>
           <column>
            <property name="text">
-            <string>Код товару</string>
+            <string>Product code</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Назва товару</string>
+            <string>Product name</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Тип товару</string>
+            <string>Product type</string>
            </property>
           </column>
          </widget>
@@ -94,14 +94,14 @@
           <item row="0" column="1">
            <widget class="QPushButton" name="button_refresh_goods_list">
             <property name="text">
-             <string>Оновити</string>
+             <string>Refresh</string>
             </property>
            </widget>
           </item>
           <item row="0" column="0">
            <widget class="QPushButton" name="button_add_goods_list">
             <property name="text">
-             <string>Додати товар</string>
+             <string>Add new product</string>
             </property>
            </widget>
           </item>
@@ -124,7 +124,7 @@
       </widget>
       <widget class="QWidget" name="tab_purchase_goods">
        <attribute name="title">
-        <string>Закупка</string>
+        <string>Purchase</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <property name="leftMargin">
@@ -143,22 +143,22 @@
          <widget class="EnhancedTableWidget" name="table_purchase_goods">
           <column>
            <property name="text">
-            <string>Номер договору</string>
+            <string>Contract number</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Дата</string>
+            <string>Date</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Постачальник</string>
+            <string>Supplier</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Отримувач</string>
+            <string>Receiver</string>
            </property>
           </column>
          </widget>
@@ -168,7 +168,7 @@
           <item row="0" column="1">
            <widget class="QPushButton" name="button_contractor_purchase_goods">
             <property name="text">
-             <string>Додати контрагента</string>
+             <string>Add new contractor</string>
             </property>
            </widget>
           </item>
@@ -188,14 +188,14 @@
           <item row="0" column="0">
            <widget class="QPushButton" name="button_add_purchase_goods">
             <property name="text">
-             <string>Додати замовлення</string>
+             <string>Add new order</string>
             </property>
            </widget>
           </item>
           <item row="0" column="2">
            <widget class="QPushButton" name="button_refresh_purchase_goods">
             <property name="text">
-             <string>Оновити</string>
+             <string>Refresh</string>
             </property>
            </widget>
           </item>
@@ -205,22 +205,22 @@
          <widget class="EnhancedTableWidget" name="table_datails_purchase_goods">
           <column>
            <property name="text">
-            <string>Номер</string>
+            <string>Code</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Назва товару</string>
+            <string>Product name</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Кiлькiсть</string>
+            <string>Amount</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Цiна за од.</string>
+            <string>Price for one</string>
            </property>
           </column>
          </widget>
@@ -229,7 +229,7 @@
       </widget>
       <widget class="QWidget" name="tab_sell_goods">
        <attribute name="title">
-        <string>Продаж</string>
+        <string>Sell</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <property name="leftMargin">
@@ -248,22 +248,22 @@
          <widget class="EnhancedTableWidget" name="table_sell_goods">
           <column>
            <property name="text">
-            <string>Номер договору</string>
+            <string>Contract number</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Дата</string>
+            <string>Date</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Постачальник</string>
+            <string>Supplier</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Отримувач</string>
+            <string>Receiver</string>
            </property>
           </column>
          </widget>
@@ -273,21 +273,21 @@
           <item row="0" column="2">
            <widget class="QPushButton" name="button_refresh_sell_goods">
             <property name="text">
-             <string>Оновити</string>
+             <string>Refresh</string>
             </property>
            </widget>
           </item>
           <item row="0" column="0">
            <widget class="QPushButton" name="button_add_sell_goods">
             <property name="text">
-             <string>Додати замовлення</string>
+             <string>Add new order</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="QPushButton" name="button_contractor_sell_goods">
             <property name="text">
-             <string>Додати контрагента</string>
+             <string>Add new contractor</string>
             </property>
            </widget>
           </item>
@@ -310,22 +310,22 @@
          <widget class="EnhancedTableWidget" name="table_details_sell_goods">
           <column>
            <property name="text">
-            <string>Номер</string>
+            <string>Code</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Назва товару</string>
+            <string>Product name</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Кiлькiсть</string>
+            <string>Amount</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Цiна за од.</string>
+            <string>Price for one</string>
            </property>
           </column>
          </widget>
@@ -334,7 +334,7 @@
       </widget>
       <widget class="QWidget" name="tab_move_goods">
        <attribute name="title">
-        <string>Переміщення</string>
+        <string>Transportation</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <property name="leftMargin">
@@ -353,17 +353,17 @@
          <widget class="EnhancedTableWidget" name="table_move_goods">
           <column>
            <property name="text">
-            <string>Номер документа</string>
+            <string>Contract number</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Дата</string>
+            <string>Date</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Тип</string>
+            <string>Order type</string>
            </property>
           </column>
          </widget>
@@ -373,14 +373,14 @@
           <item row="0" column="0">
            <widget class="QPushButton" name="button_add_move_goods">
             <property name="text">
-             <string>Перемiстити</string>
+             <string>Add new order</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="QPushButton" name="button_refresh_move_goods">
             <property name="text">
-             <string>Оновити</string>
+             <string>Refresh</string>
             </property>
            </widget>
           </item>
@@ -403,17 +403,17 @@
          <widget class="EnhancedTableWidget" name="table_details_move_goods">
           <column>
            <property name="text">
-            <string>Номер</string>
+            <string>Code</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Назва товару</string>
+            <string>Product name</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Кiлькiсть</string>
+            <string>Amount</string>
            </property>
           </column>
          </widget>

@@ -5,7 +5,7 @@ LoginWindow::LoginWindow(QWidget *parent): QDialog(parent), ui(new Ui::LoginWind
     ui->setupUi(this);
 
     this->setModal(true);
-    this->setWindowTitle("Магазин Автозапчастин");
+    this->setWindowTitle("Automotive shop");
     this->setFixedSize(this->size());
     this->move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 

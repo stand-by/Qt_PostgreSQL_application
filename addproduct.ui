@@ -32,9 +32,9 @@
   <widget class="QLabel" name="label_header">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>70</x>
      <y>0</y>
-     <width>131</width>
+     <width>171</width>
      <height>51</height>
     </rect>
    </property>
@@ -46,10 +46,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Новий товар</string>
+    <string>Add new product</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -65,7 +65,7 @@
     <item row="0" column="0">
      <widget class="QLabel" name="label_name">
       <property name="text">
-       <string>Назва товару</string>
+       <string>Product name</string>
       </property>
      </widget>
     </item>
@@ -75,14 +75,14 @@
     <item row="1" column="0">
      <widget class="QLabel" name="label_good_type">
       <property name="text">
-       <string>Тип товару</string>
+       <string>Product type</string>
       </property>
      </widget>
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_new_type">
       <property name="text">
-       <string>Новий тип</string>
+       <string>New type</string>
       </property>
      </widget>
     </item>

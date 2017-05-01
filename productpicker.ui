@@ -30,7 +30,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Обрати товар з перелiку</string>
+    <string>Choose product from list</string>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
@@ -49,14 +49,14 @@
     <item row="0" column="0">
      <widget class="QLabel" name="label_search">
       <property name="text">
-       <string>Пошук за назвою</string>
+       <string>Search by name</string>
       </property>
      </widget>
     </item>
     <item row="0" column="2">
      <widget class="QPushButton" name="pushButton_search">
       <property name="text">
-       <string>Знайти</string>
+       <string>Find</string>
       </property>
      </widget>
     </item>
@@ -64,17 +64,17 @@
      <widget class="EnhancedTableWidget" name="table_goods">
       <column>
        <property name="text">
-        <string>Код товару</string>
+        <string>Product code</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Назва товару</string>
+        <string>Product name</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Тип товару</string>
+        <string>Product type</string>
        </property>
       </column>
      </widget>
@@ -94,7 +94,7 @@
     <item row="0" column="0">
      <widget class="QPushButton" name="pushButton_addproduct">
       <property name="text">
-       <string>Додати новий товар</string>
+       <string>Add new product</string>
       </property>
      </widget>
     </item>

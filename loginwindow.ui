@@ -28,7 +28,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_username">
         <property name="text">
-         <string>Користувач</string>
+         <string>Username</string>
         </property>
        </widget>
       </item>
@@ -38,7 +38,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_password">
         <property name="text">
-         <string>Пароль</string>
+         <string>Password</string>
         </property>
        </widget>
       </item>
@@ -94,7 +94,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Авторизація користувача</string>
+       <string>Authorization</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

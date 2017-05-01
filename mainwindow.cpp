@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     //window config
     this->center_and_resize_window(1200,600);
-    this->setWindowTitle("Магазин Автозапчастин");
+    this->setWindowTitle("Automotive shop");
 
     //ui config
     this->configure_tab_widget_style();
@@ -77,13 +77,13 @@ void MainWindow::create_db_connection() {
     } else {
         qDebug() << "can not connected to db";
         qDebug() << db.lastError();
-        prompt_error("Виникла помилка при пiдключеннi до бази данних!\nПеревiрте Ваш логiн/пароль, або статус бази данних.",true);
+        prompt_error("An error occurred when connecting to database!\nCheck your login/password, or database status.",true);
     }
 }
 
 void MainWindow::prompt_error(QString text, bool exit_flag) {
     QMessageBox messageBox;
-    messageBox.critical(0,"Помилка",text);
+    messageBox.critical(0,"An error occurred",text);
     messageBox.setFixedSize(500,200);
     if(exit_flag) {
         QApplication::closeAllWindows();
@@ -134,12 +134,12 @@ void MainWindow::configure_tables() {
 
 void MainWindow::refresh_table_goods_list() {
     if(!ui->table_goods_list->fill_table_with_query(db,"SELECT * FROM goods_list;")) {
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     }
 }
 void MainWindow::refresh_table_purchase_goods() {
     if(!ui->table_purchase_goods->fill_table_with_query(db,"SELECT * FROM short_purchase_goods;")) {
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     }
 
     ui->table_purchase_goods->clearSelection();
@@ -148,7 +148,7 @@ void MainWindow::refresh_table_purchase_goods() {
 }
 void MainWindow::refresh_table_sell_goods() {
     if(!ui->table_sell_goods->fill_table_with_query(db,"SELECT * FROM short_sell_goods;")) {
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     }
 
     ui->table_sell_goods->clearSelection();
@@ -157,7 +157,7 @@ void MainWindow::refresh_table_sell_goods() {
 }
 void MainWindow::refresh_table_move_goods() {
     if(!ui->table_move_goods->fill_table_with_query(db,"SELECT * FROM short_move_goods;")) {
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     }
 
     ui->table_move_goods->clearSelection();
@@ -168,19 +168,19 @@ void MainWindow::refresh_table_move_goods() {
 void MainWindow::refresh_table_details_purchase_goods(int id_doc) {
     QString query = QString("SELECT * FROM goods_details_on_document(%1);").arg(id_doc);
     if(!ui->table_datails_purchase_goods->fill_table_with_query(db,query)) {
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     }
 }
 void MainWindow::refresh_table_details_sell_goods(int id_doc) {
     QString query = QString("SELECT * FROM goods_details_on_document(%1);").arg(id_doc);
     if(!ui->table_details_sell_goods->fill_table_with_query(db,query)) {
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     }
 }
 void MainWindow::refresh_table_details_move_goods(int id_doc) {
     QString query = QString("SELECT * FROM goods_details_on_document(%1);").arg(id_doc);
     if(!ui->table_details_move_goods->fill_table_with_query(db,query)) {
-        prompt_error("Виникла помилка при завантаженнi данних до таблицi!");
+        prompt_error("An error has occurred when uploading data to table!");
     }
 }
 

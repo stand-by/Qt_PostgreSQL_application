@@ -32,7 +32,7 @@
   <widget class="QLabel" name="label_header">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>260</x>
      <y>10</y>
      <width>131</width>
      <height>31</height>
@@ -46,7 +46,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Замовлення</string>
+    <string>Order</string>
    </property>
   </widget>
   <widget class="QTableWidget" name="table_goods">
@@ -60,27 +60,27 @@
    </property>
    <column>
     <property name="text">
-     <string>Код товару</string>
+     <string>Product price</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Назва товару</string>
+     <string>Product name</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Тип товару</string>
+     <string>Product type</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Кiлькiсть</string>
+     <string>Amount</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>Цiна за од.</string>
+     <string>Price for one</string>
     </property>
    </column>
   </widget>
@@ -97,7 +97,7 @@
     <item row="0" column="0">
      <widget class="QLabel" name="label_contractor">
       <property name="text">
-       <string>Контрагент</string>
+       <string>Contractor</string>
       </property>
      </widget>
     </item>
@@ -118,7 +118,7 @@
     <item row="1" column="0">
      <widget class="QLabel" name="label_order_date">
       <property name="text">
-       <string>Дата замовлення</string>
+       <string>Order date</string>
       </property>
      </widget>
     </item>
@@ -132,14 +132,14 @@
     <item row="2" column="0">
      <widget class="QLabel" name="label_list">
       <property name="text">
-       <string>Перелiк товарiв</string>
+       <string>Product list</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
      <widget class="QPushButton" name="button_addproduct">
       <property name="text">
-       <string>Додати товар ↓</string>
+       <string>Add product↓</string>
       </property>
      </widget>
     </item>
