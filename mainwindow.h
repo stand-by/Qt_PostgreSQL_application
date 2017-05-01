@@ -8,11 +8,9 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include <QTableWidget>
-
 #include "loginwindow.h"
 #include "addproduct.h"
 #include "productpicker.h"
-#include "tools.h"
 #include "enhancedtablewidget.h"
 #include "contractorwindow.h"
 #include "orderwindow.h"

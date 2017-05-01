@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     productpicker.cpp \
     contractorwindow.cpp \
     orderwindow.cpp \
-    moveorder.cpp
+    moveorder.cpp \
+    modalformbase.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     productpicker.h \
     contractorwindow.h \
     orderwindow.h \
-    moveorder.h
+    moveorder.h \
+    modalformbase.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
