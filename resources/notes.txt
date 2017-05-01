@@ -336,7 +336,7 @@ FOR document_date, id_type_of_document, amount, price IN
    FROM   document_on_the_move_of_goods d
    LEFT JOIN document ON document.id_document=d.id_document
    WHERE  d.id_goods = arg_id_goods AND (document.id_type_of_document = 1 OR document.id_type_of_document = 2)
-   ORDER  BY document.document_date
+   ORDER  BY document.document_date, d.id_document_on_the_move_of_goods
 LOOP
    total := amount * price;
    RETURN NEXT;
