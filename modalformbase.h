@@ -12,7 +12,7 @@ public:
     bool is_valid();
     void prompt_error(QString text, bool exit_flag = false);
 
-private:
+protected:
     QSqlDatabase db;
     bool is_filled;
 

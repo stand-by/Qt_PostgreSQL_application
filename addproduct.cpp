@@ -1,9 +1,8 @@
 #include "addproduct.h"
 #include "ui_addproduct.h"
 
-addproduct::addproduct(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(new Ui::addproduct), insert_new_type(false),is_filled(false){
+addproduct::addproduct(QWidget *parent, QSqlDatabase db_): QDialog(parent), ModalFormBase(db_), ui(new Ui::addproduct), insert_new_type(false) {
     ui->setupUi(this);
-    db = db_;
 
     //hide parts that necessary for adding new type
     ui->input_new_type->hide();
@@ -30,10 +29,6 @@ addproduct::~addproduct() {
     delete model_names;
     delete model_ids;
     delete ui;
-}
-
-bool addproduct::is_valid() {
-    return is_filled;
 }
 
 //hide or show additional fields
@@ -99,14 +94,4 @@ void addproduct::on_button_box_accepted() {
     perform_product_insert();
 
     is_filled = true;
-}
-
-void addproduct::prompt_error(QString text, bool exit_flag) {
-    QMessageBox messageBox;
-    messageBox.critical(0,"Помилка",text);
-    messageBox.setFixedSize(500,200);
-    if(exit_flag) {
-        QApplication::closeAllWindows();
-        exit(0);
-    }
 }

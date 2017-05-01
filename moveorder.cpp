@@ -1,11 +1,8 @@
 #include "moveorder.h"
 #include "ui_moveorder.h"
 
-MoveOrder::MoveOrder(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(new Ui::MoveOrder) {
+MoveOrder::MoveOrder(QWidget *parent, QSqlDatabase db_): QDialog(parent), ModalFormBase(db_), ui(new Ui::MoveOrder) {
     ui->setupUi(this);
-
-    db = db_;
-    is_filled = false;
 
     this->setModal(true);
     this->setWindowTitle("Оформити перемiщення");
@@ -19,10 +16,6 @@ MoveOrder::MoveOrder(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(new
 
 MoveOrder::~MoveOrder() {
     delete ui;
-}
-
-bool MoveOrder::is_valid() {
-    return is_filled;
 }
 
 void MoveOrder::on_buttonBox_accepted() {
@@ -76,16 +69,6 @@ void MoveOrder::config_table() {
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);
     for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
         ui->table_goods->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
-}
-
-void MoveOrder::prompt_error(QString text, bool exit_flag) {
-    QMessageBox messageBox;
-    messageBox.critical(0,"Помилка",text);
-    messageBox.setFixedSize(500,200);
-    if(exit_flag) {
-        QApplication::closeAllWindows();
-        exit(0);
-    }
 }
 
 void MoveOrder::append_to_goods_table(int id, QString name, QString type) {

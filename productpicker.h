@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QtSql>
-#include <QMessageBox>
+#include "modalformbase.h"
 #include "addproduct.h"
 
 namespace Ui {
@@ -11,14 +11,12 @@ class ProductPicker;
 }
 
 //class for choosing product from product list
-class ProductPicker : public QDialog {
+class ProductPicker : public QDialog, public ModalFormBase {
     Q_OBJECT
 
 public:
     explicit ProductPicker(QWidget *parent, QSqlDatabase db);
     ~ProductPicker();
-
-    bool is_valid();
 
     //methods for obtaining necessary info about selected product
     int pick_product_id();
@@ -32,10 +30,8 @@ private slots:
 
 private:
     Ui::ProductPicker *ui;
-    QSqlDatabase db;
 
     bool is_searching;
-    bool is_filled;
 
     int product_id;
     QString product_name;
@@ -43,7 +39,6 @@ private:
 
     void enable_search();
     void disable_search();
-    void prompt_error(QString text, bool exit_flag = false);
 };
 
 #endif // PRODUCTPICKER_H

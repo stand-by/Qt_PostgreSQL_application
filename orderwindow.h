@@ -3,9 +3,8 @@
 
 #include <QDialog>
 #include <QtSql>
-#include <QSqlQueryModel>
-#include <QMessageBox>
 #include <QSpinBox>
+#include "modalformbase.h"
 #include "contractorwindow.h"
 #include "productpicker.h"
 
@@ -14,13 +13,12 @@ class OrderWindow;
 }
 
 //class for filling purchase type or sell type of order
-class OrderWindow : public QDialog {
+class OrderWindow : public QDialog, public ModalFormBase {
     Q_OBJECT
 
 public:
     explicit OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag);
     ~OrderWindow();
-    bool is_valid();
 
 private slots:
     void on_button_addcontractor_clicked();
@@ -29,16 +27,13 @@ private slots:
 
 private:
     Ui::OrderWindow *ui;
-    QSqlDatabase db;
 
     QSqlQueryModel *model_names;
     QSqlQueryModel *model_ids;
 
-    bool is_filled;
     bool is_purchase_mode;
 
     void config_table();
-    void prompt_error(QString text, bool exit_flag = false);
     void fill_contractors_combobox();
     void append_to_goods_table(int id, QString name, QString type);
     double get_minimal_price(int id_good);

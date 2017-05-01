@@ -1,11 +1,8 @@
 #include "contractorwindow.h"
 #include "ui_contractorwindow.h"
 
-ContractorWindow::ContractorWindow(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(new Ui::ContractorWindow) {
+ContractorWindow::ContractorWindow(QWidget *parent, QSqlDatabase db_): QDialog(parent), ModalFormBase(db_), ui(new Ui::ContractorWindow) {
     ui->setupUi(this);
-
-    db = db_;
-    is_filled = false;
 
     this->setModal(true);
     this->setWindowTitle("Додати нового контрагента");
@@ -16,10 +13,6 @@ ContractorWindow::ContractorWindow(QWidget *parent, QSqlDatabase db_): QDialog(p
 
 ContractorWindow::~ContractorWindow() {
     delete ui;
-}
-
-bool ContractorWindow::is_valid() {
-    return is_filled;
 }
 
 void ContractorWindow::configure() {
@@ -106,14 +99,4 @@ bool ContractorWindow::validate_physical() {
     if(ui->lineEdit_phone_phy->text().length()==0) return false;
     if(ui->lineEdit_address_phy->text().length()==0) return false;
     return true;
-}
-
-void ContractorWindow::prompt_error(QString text, bool exit_flag) {
-    QMessageBox messageBox;
-    messageBox.critical(0,"Помилка",text);
-    messageBox.setFixedSize(500,200);
-    if(exit_flag) {
-        QApplication::closeAllWindows();
-        exit(0);
-    }
 }

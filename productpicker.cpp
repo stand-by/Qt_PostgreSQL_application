@@ -1,12 +1,10 @@
 #include "productpicker.h"
 #include "ui_productpicker.h"
 
-ProductPicker::ProductPicker(QWidget *parent, QSqlDatabase db_): QDialog(parent), ui(new Ui::ProductPicker) {
+ProductPicker::ProductPicker(QWidget *parent, QSqlDatabase db_): QDialog(parent), ModalFormBase(db_), ui(new Ui::ProductPicker) {
     ui->setupUi(this);
     disconnect(ui->table_goods, SIGNAL(cellDoubleClicked(int,int)), ui->table_goods, SLOT(handle_cell_doubleclick(int,int)));
 
-    db = db_;
-    is_filled = false;
     is_searching = false;
     product_id = -1;
 
@@ -23,7 +21,6 @@ ProductPicker::~ProductPicker() {
     delete ui;
 }
 
-bool ProductPicker::is_valid() { return is_filled; }
 int ProductPicker::pick_product_id() { return product_id; }
 QString ProductPicker::pick_product_name() { return product_name; }
 QString ProductPicker::pick_product_type() { return product_type; }
@@ -87,14 +84,4 @@ void ProductPicker::on_pushButton_addproduct_clicked() {
 
     ui->table_goods->selectionModel()->reset();
     disable_search();
-}
-
-void ProductPicker::prompt_error(QString text, bool exit_flag) {
-    QMessageBox messageBox;
-    messageBox.critical(0,"Помилка",text);
-    messageBox.setFixedSize(500,200);
-    if(exit_flag) {
-        QApplication::closeAllWindows();
-        exit(0);
-    }
 }

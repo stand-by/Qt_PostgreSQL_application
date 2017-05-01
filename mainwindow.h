@@ -3,11 +3,9 @@
 
 #include <QMainWindow>
 #include <QDesktopWidget>
-#include <QSqlDatabase>
 #include <QtSql>
 #include <QtDebug>
 #include <QMessageBox>
-#include <QTableWidget>
 #include "loginwindow.h"
 #include "addproduct.h"
 #include "productpicker.h"

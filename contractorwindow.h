@@ -3,31 +3,27 @@
 
 #include <QDialog>
 #include <QtSql>
-#include <QMessageBox>
+#include "modalformbase.h"
 
 namespace Ui {
 class ContractorWindow;
 }
 
 //class for adding new contractor
-class ContractorWindow : public QDialog {
+class ContractorWindow : public QDialog, public ModalFormBase {
     Q_OBJECT
 
 public:
     explicit ContractorWindow(QWidget *parent, QSqlDatabase db_);
     ~ContractorWindow();
-    bool is_valid();
 
 private slots:
     void on_buttonBox_accepted();
 
 private:
     Ui::ContractorWindow *ui;
-    QSqlDatabase db;
-    bool is_filled;
 
     void configure();
-    void prompt_error(QString text, bool exit_flag = false);
 
     bool validate_juridical();
     bool validate_physical();

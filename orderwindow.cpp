@@ -1,11 +1,9 @@
 #include "orderwindow.h"
 #include "ui_orderwindow.h"
 
-OrderWindow::OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag): QDialog(parent), ui(new Ui::OrderWindow) {
+OrderWindow::OrderWindow(QWidget *parent, QSqlDatabase db_, bool flag): QDialog(parent), ModalFormBase(db_), ui(new Ui::OrderWindow) {
     ui->setupUi(this);
 
-    db = db_;
-    is_filled = false;
     is_purchase_mode = flag;
 
     model_names = new QSqlQueryModel(this);
@@ -142,10 +140,6 @@ double OrderWindow::get_minimal_price(int id_good) {
     return val;
 }
 
-bool OrderWindow::is_valid() {
-    return is_filled;
-}
-
 void OrderWindow::config_table() {
     ui->table_goods->setSelectionMode(QAbstractItemView::NoSelection);
     for (int i = 0; i < ui->table_goods->horizontalHeader()->count(); ++i)
@@ -168,14 +162,4 @@ void OrderWindow::on_button_addproduct_clicked() {
         append_to_goods_table(form->pick_product_id(), form->pick_product_name(), form->pick_product_type());
 
     delete form;
-}
-
-void OrderWindow::prompt_error(QString text, bool exit_flag) {
-    QMessageBox messageBox;
-    messageBox.critical(0,"Помилка",text);
-    messageBox.setFixedSize(500,200);
-    if(exit_flag) {
-        QApplication::closeAllWindows();
-        exit(0);
-    }
 }
